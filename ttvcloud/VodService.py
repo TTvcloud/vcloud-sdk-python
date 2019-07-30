@@ -31,8 +31,8 @@ class VodService(Service):
         self.api_info = VodService.get_api_info()
         self.domain_cache = {}
         self.fallback_domain_weights = {}
-        self.last_domain_update_time = -1
         self.update_interval = 10
+        self.lock = threading.Lock()
         super(VodService, self).__init__(self.service_info, self.api_info)
 
     @staticmethod
@@ -211,18 +211,35 @@ class VodService(Service):
         else:
             return False
 
+    def async_update_domain_weights(self, space_name):
+        while True:
+            time.sleep(self.update_interval)
+
+            domain_weights = self.get_domain_weights(space_name)
+            self.lock.acquire()
+            if domain_weights:
+                self.domain_cache[space_name] = domain_weights
+            else:
+                self.domain_cache[space_name] = self.fallback_domain_weights
+            self.lock.release()
+
     def get_domain_info(self, space_name):
-        now = time.time()
-        if self.last_domain_update_time == -1 or now - self.last_domain_update_time > self.update_interval:
+        self.lock.acquire()
+        if not self.domain_cache.has_key(space_name):
             domain_weights = self.get_domain_weights(space_name)
             if domain_weights:
                 self.domain_cache[space_name] = domain_weights
-                self.last_domain_update_time = now
             else:
                 self.domain_cache[space_name] = self.fallback_domain_weights
 
-        main_domain = VodService.rand_weights(self.domain_cache[space_name], '')
-        backup_domain = VodService.rand_weights(self.domain_cache[space_name], main_domain)
+            t = threading.Thread(target=self.async_update_domain_weights, args=(space_name,))
+            t.setDaemon(True)
+            t.start()
+        self.lock.release()
+        cache = self.domain_cache[space_name]
+
+        main_domain = VodService.rand_weights(cache, '')
+        backup_domain = VodService.rand_weights(cache, main_domain)
         return {'MainDomain': main_domain, 'BackupDomain': backup_domain}
 
     def get_poster_url(self, space_name, uri, option):

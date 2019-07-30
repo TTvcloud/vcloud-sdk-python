@@ -10,8 +10,8 @@ if __name__ == '__main__':
     vod_service = VodService()
 
     # call below method if you dont set ak and sk in $HOME/.vcloud/config
-    vod_service.set_ak('your ak')
-    vod_service.set_sk('your sk')
+    vod_service.set_ak('ak')
+    vod_service.set_sk('sk')
 
     # set fallback weights if necessary
     fallback_weights = {'v1.test.com': 10, 'v3.test.com': 5}
@@ -21,7 +21,6 @@ if __name__ == '__main__':
         sys.exit(-1)
 
     space_name = 'your space_name'
-    vid = 'your vid'
 
     resp = vod_service.get_domain_weights(space_name)
     print resp
