@@ -13,14 +13,6 @@ if __name__ == '__main__':
     file_path = 'your file_path'
     url = 'your url'
 
-    resp = vod_service.get_upload_auth_token(space_name)
-    print resp
-
-    print '*' * 100
-
-    # https://vcloud.bytedance.net/docs/4/2915/
-    # https://vcloud.bytedance.net/docs/4/2916/
-
     function_list = list()
 
     get_meta_function = {'Name': 'GetMeta'}
@@ -30,11 +22,11 @@ if __name__ == '__main__':
     snapshot_function = {'Name': 'Snapshot', 'Input': snapshot_function_input}
     function_list.append(snapshot_function)
 
-    resp = vod_service.upload(space_name, file_path, FILE_TYPE_VIDEO, function_list)
+    resp = vod_service.upload_video(space_name, file_path, FILE_TYPE_VIDEO, function_list)
     print resp
 
     print '*' * 100
-    # https://vcloud.bytedance.net/docs/4/4652/
+
     params = dict()
     params['SpaceName'] = space_name
     params['Format'] = UPLOAD_FORMAT_MP4

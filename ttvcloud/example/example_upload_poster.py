@@ -1,4 +1,5 @@
 # coding:utf-8
+from ttvcloud.Const import *
 from ttvcloud.VodService import VodService
 
 if __name__ == '__main__':
@@ -8,11 +9,9 @@ if __name__ == '__main__':
     # vod_service.set_ak('ak')
     # vod_service.set_sk('sk')
 
-    body = dict()
-    body['Vid'] = 'your vid'
-    body['SpaceName'] = 'your space_name'
-    body['Status'] = 'Published'
-    # body['Status'] = 'Blocked'
+    space_name = 'your space_name'
+    file_path = 'your file_path'
+    vid = 'your vid'
 
-    resp = vod_service.set_video_publish_status(body)
+    resp = vod_service.upload_poster(vid, space_name, file_path, FILE_TYPE_IMAGE)
     print resp

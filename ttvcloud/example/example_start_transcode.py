@@ -8,7 +8,6 @@ if __name__ == '__main__':
     # vod_service.set_ak('ak')
     # vod_service.set_sk('sk')
 
-    # https://vcloud.bytedance.net/docs/4/1670/
     params = dict()
     params['TemplateId'] = 'your template id'
 

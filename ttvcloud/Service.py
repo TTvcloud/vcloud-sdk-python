@@ -60,7 +60,8 @@ class Service(object):
         SignerV4.sign(r, self.service_info.credentials)
 
         url = r.build()
-        resp = self.session.get(url, headers=r.headers)
+        resp = self.session.get(url, headers=r.headers,
+                                timeout=(self.service_info.connection_timeout, self.service_info.socket_timeout))
         if resp.status_code == 200:
             return resp.text
         else:
@@ -77,7 +78,8 @@ class Service(object):
         SignerV4.sign(r, self.service_info.credentials)
 
         url = r.build()
-        resp = self.session.post(url, headers=r.headers, data=r.form)
+        resp = self.session.post(url, headers=r.headers, data=r.form,
+                                 timeout=(self.service_info.connection_timeout, self.service_info.socket_timeout))
         if resp.status_code == 200:
             return resp.text
         else:
@@ -94,7 +96,8 @@ class Service(object):
         SignerV4.sign(r, self.service_info.credentials)
 
         url = r.build()
-        resp = self.session.post(url, headers=r.headers, data=r.body)
+        resp = self.session.post(url, headers=r.headers, data=r.body,
+                                 timeout=(self.service_info.connection_timeout, self.service_info.socket_timeout))
         if resp.status_code == 200:
             return resp.text
         else:

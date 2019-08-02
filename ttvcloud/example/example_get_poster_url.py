@@ -10,8 +10,11 @@ if __name__ == '__main__':
     vod_service = VodService()
 
     # call below method if you dont set ak and sk in $HOME/.vcloud/config
-    vod_service.set_ak('ak')
-    vod_service.set_sk('sk')
+    # vod_service.set_ak('ak')
+    # vod_service.set_sk('sk')
+
+    space_name = 'your space_name'
+    uri = 'your uri'
 
     # set fallback weights if necessary
     fallback_weights = {'v1.test.com': 10, 'v3.test.com': 5}
@@ -19,8 +22,6 @@ if __name__ == '__main__':
     if not resp:
         print 'set fallback weights error'
         sys.exit(-1)
-
-    space_name = 'your space_name'
 
     resp = vod_service.get_domain_weights(space_name)
     print resp
@@ -34,24 +35,10 @@ if __name__ == '__main__':
 
     print '*' * 100
 
-    uri = 'your uri'
-
     option = ImgUrlOption()
     option.set_https()
     option.set_vod_tpl_smart_crop(600, 392)
     option.set_format(FORMAT_AWEBP)
 
     resp = vod_service.get_poster_url(space_name, uri, option)
-    print resp
-
-    print '*' * 100
-
-    option = ImgUrlOption()
-    option.set_https()
-    option.set_format(FORMAT_AWEBP)
-    option.set_vod_tpl_sig()
-    option.set_sig_key('your sig')
-    option.set_kv({'from': 'my测试'})
-
-    resp = vod_service.get_image_url(space_name, uri, option)
     print resp

@@ -59,6 +59,8 @@ class VodService(Service):
                                                       {"Action": "GetOriginVideoPlayInfo", "Version": "2018-01-01"}, {},
                                                       {}),
                     "RedirectPlay": ApiInfo("GET", "/", {"Action": "RedirectPlay", "Version": "2018-01-01"}, {}, {}),
+                    "ModifyVideoInfo": ApiInfo("POST", "/", {"Action": "ModifyVideoInfo", "Version": "2018-01-01"}, {},
+                                               {}),
                     }
         return api_info
 
@@ -90,8 +92,7 @@ class VodService(Service):
         return base64.b64encode(data.decode('utf-8'))
 
     # upload
-    def get_upload_auth_token(self, space_name):
-        params = {'SpaceName': space_name}
+    def get_upload_auth_token(self, params):
         apply_token = self.get_sign_url('ApplyUpload', params)
         commit_token = self.get_sign_url('CommitUpload', params)
 
@@ -120,7 +121,7 @@ class VodService(Service):
         res_json = json.loads(res)
         return res_json
 
-    def upload(self, space_name, file_path, file_type, funtions_list):
+    def upload(self, space_name, file_path, file_type):
         if not os.path.isfile(file_path):
             raise Exception("no such file on file path")
         check_sum = hex(VodService.crc32(file_path))[2:]
@@ -153,7 +154,11 @@ class VodService(Service):
         cost = (time.time() - start) * 1000
         file_size = os.path.getsize(file_path)
         avg_speed = float(file_size) / float(cost)
-        print 'upload cost {} ms, avgSpeed: {} KB/s'.format(cost, avg_speed)
+
+        return oid, session_key, avg_speed
+
+    def upload_video(self, space_name, file_path, file_type, funtions_list):
+        oid, session_key, avg_speed = self.upload(space_name, file_path, file_type)
 
         commit_upload_request = {'SpaceName': space_name}
 
@@ -167,6 +172,29 @@ class VodService(Service):
         if resp['ResponseMetadata'].has_key('Error'):
             raise Exception(resp['ResponseMetadata']['Error']['Message'])
         return resp['Result']
+
+    def upload_poster(self, vid, space_name, file_path, file_type):
+        oid, session_key, avg_speed = self.upload(space_name, file_path, file_type)
+
+        user_info = {'PosterUri': oid}
+        body = {'SpaceName': space_name, 'Vid': vid, 'Info': user_info}
+        body = json.dumps(body)
+
+        resp = self.modify_video_info(body)
+        if resp['ResponseMetadata'].has_key('Error'):
+            raise Exception(resp['ResponseMetadata']['Error']['Message'])
+        if not resp['Result'].has_key('BaseResp') or not resp['Result']['BaseResp'].has_key('StatusCode') or \
+                resp['Result']['BaseResp']['StatusCode'] != 0:
+            raise Exception("update post uri error via ModifyVideoInfo")
+        return oid
+
+    # video info
+    def modify_video_info(self, body):
+        res = self.json('ModifyVideoInfo', {}, body)
+        if res == '':
+            raise Exception("empty response")
+        res_json = json.loads(res)
+        return res_json
 
     @staticmethod
     def crc32(file_path):
@@ -199,7 +227,7 @@ class VodService(Service):
         if res == '':
             raise Exception("empty response")
         res_json = json.loads(res)
-        if not res_json['ResponseMetadata'].has_key('Error'):
+        if not res_json['ResponseMetadata'].has_key('Error') and res_json['Result'].has_key(space_name):
             return res_json['Result'][space_name]
         else:
             return {}
@@ -258,39 +286,6 @@ class VodService(Service):
 
         main_url = '{}://{}/{}~{}.{}'.format(proto, domain_info['MainDomain'], uri, tpl, format)
         backup_url = '{}://{}/{}~{}.{}'.format(proto, domain_info['BackupDomain'], uri, tpl, format)
-        return {'MainUrl': main_url, 'BackupUrl': backup_url}
-
-    def get_image_url(self, space_name, uri, option):
-        domain_info = self.get_domain_info(space_name)
-        proto = HTTP
-        if option.isHttps:
-            proto = HTTPS
-        format = FORMAT_ORIGINAL
-        if option.format:
-            format = option.format
-        sig_key = ''
-        if option.sig_key:
-            sig_key = option.sig_key
-
-        path = '/{}~{}.{}'.format(uri, option.tpl, format)
-        sig_txt = path
-        kv = {}
-        if option.kv:
-            kv = option.kv
-            if kv.has_key('sig'):
-                del kv['sig']
-            sig_txt = '{}?{}'.format(path, Util.norm_query(kv))
-
-        if sig_key:
-            sign = base64.urlsafe_b64encode(Util.hmac_sha1(sig_key, sig_txt))
-            sig_params = {'sig': sign}
-            kv = self.merge(kv, sig_params)
-            path = '{}?{}'.format(path, Util.norm_query(kv))
-        else:
-            path = sig_txt
-
-        main_url = '{}://{}{}'.format(proto, domain_info['MainDomain'], path)
-        backup_url = '{}://{}{}'.format(proto, domain_info['BackupDomain'], path)
         return {'MainUrl': main_url, 'BackupUrl': backup_url}
 
     @staticmethod
