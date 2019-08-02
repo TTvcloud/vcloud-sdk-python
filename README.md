@@ -20,12 +20,19 @@ require python verion >= 2.7
 
 #### 上传
 
+- 通过指定url地址上传
+
+[upload_media_by_url](https://open.bytedance.com/docs/4/4652/)
+
+- 服务端直接上传
+
 上传视频包括 [apply_upload](https://open.bytedance.com/docs/4/2915/) 和 [commit_upload](https://open.bytedance.com/docs/4/2916/) 两步
 
 上传封面图包括 [apply_upload](https://open.bytedance.com/docs/4/2915/) 和 [modify_video_info](https://open.bytedance.com/docs/4/4367/) 两步
 
 
 为方便用户使用，封装方法 upload_video 和 upload_poster， 一步上传
+
 
 
 #### 转码
@@ -45,6 +52,16 @@ require python verion >= 2.7
 
 #### 封面图:
 [get_poster_url]()
+
+#### token相关
+[get_upload_auth_token](https://open.bytedance.com/docs/4/6275/)
+
+[get_play_auth_token](https://open.bytedance.com/docs/4/6275/)
+
+PS: 上述两个接口和 [get_redirect_play](https://open.bytedance.com/docs/4/9205/) 接口中均含有 X-Amz-Expires 这个参数
+
+关于这个参数的解释为：设置返回的playAuthToken或uploadToken或follow 302地址的有效期，目前服务端默认该参数为15min（900s），如果用户认为该有效期过长，可以传递该参数来控制过期时间
+。
 
 #### 更多示例参见 example
 
