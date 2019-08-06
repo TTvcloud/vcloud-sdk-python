@@ -1,11 +1,11 @@
 # coding:utf-8
-import threading
 import json
+import threading
 
-from ApiInfo import ApiInfo
-from Credentials import Credentials
-from Service import Service
-from ServiceInfo import ServiceInfo
+from ttvcloud.ApiInfo import ApiInfo
+from ttvcloud.Credentials import Credentials
+from ttvcloud.Service import Service
+from ttvcloud.ServiceInfo import ServiceInfo
 
 
 class IamService(Service):

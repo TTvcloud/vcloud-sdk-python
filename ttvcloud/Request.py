@@ -1,6 +1,10 @@
-#coding : utf-8
+# coding : utf-8
 from collections import OrderedDict
-from urllib import urlencode
+
+try:
+    from urllib import urlencode
+except:
+    from urllib.parse import urlencode
 
 
 class Request(object):

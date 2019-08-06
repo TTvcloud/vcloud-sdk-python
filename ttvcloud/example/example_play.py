@@ -1,4 +1,6 @@
 # coding:utf-8
+from __future__ import print_function
+
 from ttvcloud.VodService import VodService
 
 if __name__ == '__main__':
@@ -13,21 +15,21 @@ if __name__ == '__main__':
     params = dict()
     params['video_id'] = vid
     resp = vod_service.get_play_info(params)
-    if not resp['ResponseMetadata'].has_key('Error'):
-        print resp['Result']['Data']['PlayInfoList'][0]['MainPlayUrl']
-        print resp['Result']['Data']['PlayInfoList'][0]['BackupPlayUrl']
+    if not ('Error' in resp['ResponseMetadata']):
+        print(resp['Result']['Data']['PlayInfoList'][0]['MainPlayUrl'])
+        print(resp['Result']['Data']['PlayInfoList'][0]['BackupPlayUrl'])
 
-    print '*' * 100
+    print('*' * 100)
 
     params = dict()
     params['Vid'] = vid
     params['Ssl'] = '1'
     resp = vod_service.get_origin_video_play_info(params)
-    if not resp['ResponseMetadata'].has_key('Error'):
-        print resp['Result']['MainPlayUrl']
-        print resp['Result']['BackupPlayUrl']
+    if not ('Error' in resp['ResponseMetadata']):
+        print(resp['Result']['MainPlayUrl'])
+        print(resp['Result']['BackupPlayUrl'])
 
-    print '*' * 100
+    print('*' * 100)
 
     params = dict()
     params['Vid'] = vid
@@ -35,7 +37,4 @@ if __name__ == '__main__':
     # set if if you know the params' meaning exactly.
     params['X-Amz-Expires'] = '60'
     resp = vod_service.get_redirect_play(params)
-    print resp
-
-
-
+    print(resp)

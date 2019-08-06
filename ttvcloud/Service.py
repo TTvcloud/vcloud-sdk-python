@@ -5,8 +5,8 @@ from collections import OrderedDict
 
 import requests
 
-from Request import Request
-from SignerV4 import SignerV4
+from ttvcloud.Request import Request
+from ttvcloud.SignerV4 import SignerV4
 
 
 class Service(object):
@@ -17,7 +17,7 @@ class Service(object):
         self.init()
 
     def init(self):
-        if os.environ.has_key('VCLOUD_ACCESSKEY') and os.environ.has_key('VCLOUD_SECRETKEY'):
+        if 'VCLOUD_ACCESSKEY' in os.environ and 'VCLOUD_SECRETKEY' in os.environ:
             self.service_info.set_ak(os.environ['VCLOUD_ACCESSKEY'])
             self.service_info.set_sk(os.environ['VCLOUD_SECRETKEY'])
         else:
@@ -26,9 +26,9 @@ class Service(object):
             if os.path.isfile(path):
                 with open(path, 'r') as f:
                     j = json.load(f)
-                    if j.has_key('ak'):
+                    if 'ak' in j:
                         self.service_info.credentials.set_ak(j['ak'])
-                    if j.has_key('sk'):
+                    if 'sk' in j:
                         self.service_info.credentials.set_sk(j['sk'])
 
     def set_ak(self, ak):
@@ -38,7 +38,7 @@ class Service(object):
         self.service_info.credentials.set_sk(sk)
 
     def get_sign_url(self, api, params):
-        if not self.api_info.has_key(api):
+        if not (api in self.api_info):
             raise Exception("no such api")
         api_info = self.api_info[api]
 
@@ -51,7 +51,7 @@ class Service(object):
         return SignerV4.sign_url(r, self.service_info.credentials)
 
     def get(self, api, params):
-        if not self.api_info.has_key(api):
+        if not (api in self.api_info):
             raise Exception("no such api")
         api_info = self.api_info[api]
 
@@ -68,7 +68,7 @@ class Service(object):
             return ''
 
     def post(self, api, params, form):
-        if not self.api_info.has_key(api):
+        if not (api in self.api_info):
             raise Exception("no such api")
         api_info = self.api_info[api]
         r = self.prepare_request(api_info, params)
@@ -86,7 +86,7 @@ class Service(object):
             return ''
 
     def json(self, api, params, body):
-        if not self.api_info.has_key(api):
+        if not (api in self.api_info):
             raise Exception("no such api")
         api_info = self.api_info[api]
         r = self.prepare_request(api_info, params)

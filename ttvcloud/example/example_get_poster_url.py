@@ -1,4 +1,6 @@
 # coding:utf-8
+from __future__ import print_function
+
 import sys
 import time
 
@@ -20,20 +22,20 @@ if __name__ == '__main__':
     fallback_weights = {'v1.test.com': 10, 'v3.test.com': 5}
     resp = vod_service.set_fallback_domain_weights(fallback_weights)
     if not resp:
-        print 'set fallback weights error'
+        print('set fallback weights error')
         sys.exit(-1)
 
     resp = vod_service.get_domain_weights(space_name)
-    print resp
+    print(resp)
 
-    print '*' * 100
+    print('*' * 100)
 
     for i in range(20):
         resp = vod_service.get_domain_info(space_name)
-        print resp
+        print(resp)
         time.sleep(1)
 
-    print '*' * 100
+    print('*' * 100)
 
     option = ImgUrlOption()
     option.set_https()
@@ -41,4 +43,4 @@ if __name__ == '__main__':
     option.set_format(FORMAT_AWEBP)
 
     resp = vod_service.get_poster_url(space_name, uri, option)
-    print resp
+    print(resp)

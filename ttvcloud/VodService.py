@@ -1,19 +1,21 @@
 # coding:utf-8
 
+from __future__ import print_function
+
 import base64
 import json
 import os
 import random
+import sys
 import threading
 import time
 from zlib import crc32
 
-from ApiInfo import ApiInfo
-from Const import *
-from Credentials import Credentials
-from Service import Service
-from ServiceInfo import ServiceInfo
-from Util import Util
+from ttvcloud.ApiInfo import ApiInfo
+from ttvcloud.Const import *
+from ttvcloud.Credentials import Credentials
+from ttvcloud.Service import Service
+from ttvcloud.ServiceInfo import ServiceInfo
 
 
 class VodService(Service):
@@ -89,7 +91,10 @@ class VodService(Service):
         token = self.get_sign_url('GetPlayInfo', params)
         ret = {'Version': 'v1', 'GetPlayInfoToken': token}
         data = json.dumps(ret)
-        return base64.b64encode(data.decode('utf-8'))
+        if sys.version_info[0] == 3:
+            return base64.b64encode(data.encode('utf-8')).decode('utf-8')
+        else:
+            return base64.b64encode(data.decode('utf-8'))
 
     # upload
     def get_upload_auth_token(self, params):
@@ -98,7 +103,10 @@ class VodService(Service):
 
         ret = {'Version': 'v1', 'ApplyUploadToken': apply_token, 'CommitUploadToken': commit_token}
         data = json.dumps(ret)
-        return base64.b64encode(data.decode('utf-8'))
+        if sys.version_info[0] == 3:
+            return base64.b64encode(data.encode('utf-8')).decode('utf-8')
+        else:
+            return base64.b64encode(data.decode('utf-8'))
 
     def apply_upload(self, params):
         res = self.get('ApplyUpload', params)
@@ -128,7 +136,7 @@ class VodService(Service):
 
         apply_upload_request = {'SpaceName': space_name, 'UploadHosts': 1, 'FileType': file_type}
         resp = self.apply_upload(apply_upload_request)
-        if resp['ResponseMetadata'].has_key('Error'):
+        if 'Error' in resp['ResponseMetadata']:
             raise Exception(resp['ResponseMetadata']['Error']['Message'])
 
         oid = resp['Result']['UploadAddress']['StoreInfos'][0]['StoreUri']
@@ -147,7 +155,7 @@ class VodService(Service):
             if upload_status:
                 break
             else:
-                print resp
+                print(resp)
         if not upload_status:
             raise Exception("upload error")
 
@@ -169,7 +177,7 @@ class VodService(Service):
         body = json.dumps(body)
 
         resp = self.commit_upload(commit_upload_request, body)
-        if resp['ResponseMetadata'].has_key('Error'):
+        if 'Error' in resp['ResponseMetadata']:
             raise Exception(resp['ResponseMetadata']['Error']['Message'])
         return resp['Result']
 
@@ -181,9 +189,9 @@ class VodService(Service):
         body = json.dumps(body)
 
         resp = self.modify_video_info(body)
-        if resp['ResponseMetadata'].has_key('Error'):
+        if 'Error' in resp['ResponseMetadata']:
             raise Exception(resp['ResponseMetadata']['Error']['Message'])
-        if not resp['Result'].has_key('BaseResp') or not resp['Result']['BaseResp'].has_key('StatusCode') or \
+        if not ('BaseResp' in resp['Result']) or not ('StatusCode' in resp['Result']['BaseResp']) or \
                 resp['Result']['BaseResp']['StatusCode'] != 0:
             raise Exception("update post uri error via ModifyVideoInfo")
         return oid
@@ -227,7 +235,7 @@ class VodService(Service):
         if res == '':
             raise Exception("empty response")
         res_json = json.loads(res)
-        if not res_json['ResponseMetadata'].has_key('Error') and res_json['Result'].has_key(space_name):
+        if not ('Error' in res_json['ResponseMetadata']) and (space_name in res_json['Result']):
             return res_json['Result'][space_name]
         else:
             return {}
@@ -253,7 +261,7 @@ class VodService(Service):
 
     def get_domain_info(self, space_name):
         self.lock.acquire()
-        if not self.domain_cache.has_key(space_name):
+        if not (space_name in self.domain_cache):
             domain_weights = self.get_domain_weights(space_name)
             if domain_weights:
                 self.domain_cache[space_name] = domain_weights

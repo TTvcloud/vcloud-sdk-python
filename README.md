@@ -4,7 +4,12 @@
 require python verion >= 2.7
 
 ```
-    pip install ttvcloud
+    pip install --user ttvcloud
+```
+
+如果已经安装ttvcloud包，则用下面命令升级即可
+```
+    pip install --upgrade ttvcloud
 ```
 
 ### AK/SK设置
@@ -68,6 +73,9 @@ PS: 上述两个接口和 [get_redirect_play](https://open.bytedance.com/docs/4/
 
 
 ###Change log
+
+#### 0.0.6
+- 兼容py2 py3
 
 #### 0.0.5
 - 去掉image X 相关

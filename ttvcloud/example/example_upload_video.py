@@ -1,4 +1,6 @@
 # coding:utf-8
+from __future__ import print_function
+
 from ttvcloud.Const import *
 from ttvcloud.VodService import VodService
 
@@ -23,13 +25,13 @@ if __name__ == '__main__':
     function_list.append(snapshot_function)
 
     resp = vod_service.upload_video(space_name, file_path, FILE_TYPE_VIDEO, function_list)
-    print resp
+    print(resp)
 
-    print '*' * 100
+    print('*' * 100)
 
     params = dict()
     params['SpaceName'] = space_name
     params['Format'] = UPLOAD_FORMAT_MP4
     params['SourceUrls'] = [url]
     resp = vod_service.upload_media_by_url(params)
-    print resp
+    print(resp)

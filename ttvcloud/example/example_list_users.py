@@ -1,4 +1,6 @@
 # coding:utf-8
+from __future__ import print_function
+
 from ttvcloud.IamService import IamService
 
 if __name__ == '__main__':
@@ -13,4 +15,4 @@ if __name__ == '__main__':
     params['Offset'] = 0
 
     resp = iam_service.list_users(params)
-    print resp
+    print(resp)

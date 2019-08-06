@@ -1,11 +1,16 @@
 # coding : utf-8
 import datetime
-import urllib
+import sys
 
 import pytz
 
-from MetaData import MetaData
-from Util import Util
+try:
+    from urllib import urlencode
+except:
+    from urllib.parse import urlencode
+
+from ttvcloud.MetaData import MetaData
+from ttvcloud.Util import Util
 
 
 class SignerV4(object):
@@ -13,7 +18,7 @@ class SignerV4(object):
     def sign(request, credentials):
         if request.path == '':
             request.path = '/'
-        if request.method != 'GET' and not request.headers.has_key('Content-Type'):
+        if request.method != 'GET' and not ('Content-Type' in request.headers):
             request.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
 
         format_date = SignerV4.get_current_format_date()
@@ -63,12 +68,15 @@ class SignerV4(object):
         sign = SignerV4.signature_v4(signing_key, signing_str)
 
         query['X-Amz-Signature'] = sign
-        return urllib.urlencode(query)
+        return urlencode(query)
 
     @staticmethod
     def hashed_simple_canonical_request_v4(request, meta):
         body = bytes()
-        body_hash = Util.sha256(body)
+        if sys.version_info[0] == 3:
+            body_hash = Util.sha256(body.decode('utf-8'))
+        else:
+            body_hash = Util.sha256(body)
 
         if request.path == '':
             request.path = '/'
@@ -88,7 +96,7 @@ class SignerV4(object):
             if key in ['Content-Type', 'Content-Md5', 'Host'] or key.startswith('X-Amz-'):
                 signed_headers[key.lower()] = request.headers[key]
 
-        if signed_headers.has_key('host'):
+        if 'host' in signed_headers:
             v = signed_headers['host']
             if v.find(':') != -1:
                 split = v.split(':')
@@ -114,7 +122,10 @@ class SignerV4(object):
 
     @staticmethod
     def get_signing_secret_key_v4(sk, date, region, service):
-        kdate = Util.hmac_sha256('AWS4' + sk, date)
+        if sys.version_info[0] == 3:
+            kdate = Util.hmac_sha256(b'AWS4' + bytes(sk, encoding='utf-8'), date)
+        else:
+            kdate = Util.hmac_sha256('AWS4' + sk, date)
         kregion = Util.hmac_sha256(kdate, region)
         kservice = Util.hmac_sha256(kregion, service)
         return Util.hmac_sha256(kservice, 'aws4_request')

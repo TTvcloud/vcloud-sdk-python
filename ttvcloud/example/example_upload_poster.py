@@ -1,4 +1,6 @@
 # coding:utf-8
+from __future__ import print_function
+
 from ttvcloud.Const import *
 from ttvcloud.VodService import VodService
 
@@ -14,4 +16,4 @@ if __name__ == '__main__':
     vid = 'your vid'
 
     resp = vod_service.upload_poster(vid, space_name, file_path, FILE_TYPE_IMAGE)
-    print resp
+    print(resp)

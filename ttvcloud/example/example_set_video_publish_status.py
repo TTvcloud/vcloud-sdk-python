@@ -1,4 +1,6 @@
 # coding:utf-8
+from __future__ import print_function
+
 from ttvcloud.VodService import VodService
 
 if __name__ == '__main__':
@@ -15,4 +17,4 @@ if __name__ == '__main__':
     # body['Status'] = 'Blocked'
 
     resp = vod_service.set_video_publish_status(body)
-    print resp
+    print(resp)
