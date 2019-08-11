@@ -6,6 +6,7 @@ python:
   - 3.5
 install:
   - pip install -r requirements.txt
+script: skip
 deploy:
   provider: pypi
   user: ttvcloud
