@@ -9,8 +9,8 @@ try:
 except:
     from urllib.parse import urlencode
 
-from ttvcloud.MetaData import MetaData
-from ttvcloud.Util import Util
+from ttvcloud.auth.MetaData import MetaData
+from ttvcloud.util.Util import Util
 
 
 class SignerV4(object):

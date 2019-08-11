@@ -4,7 +4,7 @@ import threading
 
 from ttvcloud.ApiInfo import ApiInfo
 from ttvcloud.Credentials import Credentials
-from ttvcloud.Service import Service
+from ttvcloud.base.Service import Service
 from ttvcloud.ServiceInfo import ServiceInfo
 
 

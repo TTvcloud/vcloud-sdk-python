@@ -1,7 +1,7 @@
 # coding:utf-8
 from __future__ import print_function
 
-from ttvcloud.IamService import IamService
+from ttvcloud.iam.IamService import IamService
 
 if __name__ == '__main__':
     iam_service = IamService()

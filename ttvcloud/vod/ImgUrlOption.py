@@ -1,5 +1,5 @@
 # coding:utf-8
-from ttvcloud.Const import *
+from ttvcloud.const.Const import *
 
 
 class ImgUrlOption(object):

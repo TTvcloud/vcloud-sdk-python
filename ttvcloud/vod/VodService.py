@@ -12,9 +12,9 @@ import time
 from zlib import crc32
 
 from ttvcloud.ApiInfo import ApiInfo
-from ttvcloud.Const import *
+from ttvcloud.const.Const import *
 from ttvcloud.Credentials import Credentials
-from ttvcloud.Service import Service
+from ttvcloud.base.Service import Service
 from ttvcloud.ServiceInfo import ServiceInfo
 
 

@@ -4,9 +4,9 @@ from __future__ import print_function
 import sys
 import time
 
-from ttvcloud.Const import *
-from ttvcloud.ImgUrlOption import ImgUrlOption
-from ttvcloud.VodService import VodService
+from ttvcloud.const.Const import *
+from ttvcloud.vod.ImgUrlOption import ImgUrlOption
+from ttvcloud.vod.VodService import VodService
 
 if __name__ == '__main__':
     vod_service = VodService()

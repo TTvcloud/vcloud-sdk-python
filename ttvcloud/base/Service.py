@@ -5,8 +5,8 @@ from collections import OrderedDict
 
 import requests
 
-from ttvcloud.Request import Request
-from ttvcloud.SignerV4 import SignerV4
+from ttvcloud.base.Request import Request
+from ttvcloud.auth.SignerV4 import SignerV4
 
 
 class Service(object):

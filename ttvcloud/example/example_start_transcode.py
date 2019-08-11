@@ -1,7 +1,7 @@
 # coding:utf-8
 from __future__ import print_function
 
-from ttvcloud.VodService import VodService
+from ttvcloud.vod.VodService import VodService
 
 if __name__ == '__main__':
     vod_service = VodService()

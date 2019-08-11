@@ -74,6 +74,10 @@ PS: 上述两个接口和 [get_redirect_play](https://open.bytedance.com/docs/4/
 
 ###Change log
 
+#### 0.0.7
+- 代码格式优化
+- 增加travis打包
+
 #### 0.0.6
 - 兼容py2 py3
 
