@@ -1,5 +1,7 @@
 ## TTVcloud SDK for Python
 
+[![Build Status](https://travis-ci.org/TTvcloud/vcloud-sdk-python.svg?branch=master)](https://travis-ci.org/TTvcloud/vcloud-sdk-python)
+
 ### 安装
 require python verion >= 2.7
 
