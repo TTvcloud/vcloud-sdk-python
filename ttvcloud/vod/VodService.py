@@ -12,10 +12,10 @@ import time
 from zlib import crc32
 
 from ttvcloud.ApiInfo import ApiInfo
-from ttvcloud.const.Const import *
 from ttvcloud.Credentials import Credentials
-from ttvcloud.base.Service import Service
 from ttvcloud.ServiceInfo import ServiceInfo
+from ttvcloud.base.Service import Service
+from ttvcloud.const.Const import *
 
 
 class VodService(Service):
@@ -28,8 +28,8 @@ class VodService(Service):
                     VodService._instance = object.__new__(cls)
         return VodService._instance
 
-    def __init__(self):
-        self.service_info = VodService.get_service_info()
+    def __init__(self, region='cn-north-1'):
+        self.service_info = VodService.get_service_info(region)
         self.api_info = VodService.get_api_info()
         self.domain_cache = {}
         self.fallback_domain_weights = {}
@@ -38,9 +38,19 @@ class VodService(Service):
         super(VodService, self).__init__(self.service_info, self.api_info)
 
     @staticmethod
-    def get_service_info():
-        service_info = ServiceInfo("vod.bytedanceapi.com", {'Accept': 'application/json'},
-                                   Credentials('', '', 'vod', 'cn-north-1'), 5000, 5000)
+    def get_service_info(region):
+        service_info_map = {
+            'cn-north-1': ServiceInfo("vod.bytedanceapi.com", {'Accept': 'application/json'},
+                                      Credentials('', '', 'vod', 'cn-north-1'), 5000, 5000),
+            'ap-singapore-1': ServiceInfo("vod.ap-singapore-1.bytedanceapi.com", {'Accept': 'application/json'},
+                                          Credentials('', '', 'vod', 'ap-singapore-1'), 5000, 5000),
+            'us-east-1': ServiceInfo("vod.us-east-1.bytedanceapi.com", {'Accept': 'application/json'},
+                                     Credentials('', '', 'vod', 'us-east-1'), 5000, 5000),
+        }
+        service_info = service_info_map.get(region, None)
+        if not service_info:
+            raise Exception('Cant find the region, please check it carefully')
+
         return service_info
 
     @staticmethod

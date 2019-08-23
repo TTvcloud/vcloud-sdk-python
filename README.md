@@ -23,6 +23,19 @@ require python verion >= 2.7
 
 以上优先级依次降低，建议在代码里显示设置，以便问题排查
 
+### 地域Region设置
+- 目前已开放三个地域设置，分别为
+  ```
+  - cn-north-1 (默认)
+  - ap-singapore-1
+  - us-east-1
+  ```
+- 默认为cn-north-1，如果需要调用其它地域服务，请在初始化函数getInstance中传入指定地域region，例如：
+  ```
+  vod_service = VodService('us-east-1')
+  ```
+- 注意：IAM模块目前只开放cn-north-1区域
+
 ### API
 
 #### 上传
@@ -58,7 +71,7 @@ require python verion >= 2.7
 [get_redirect_play](https://open.bytedance.com/docs/4/9205/)
 
 #### 封面图:
-[get_poster_url]()
+[get_poster_url](https://open.bytedance.com/docs/4/5335/)
 
 #### token相关
 [get_upload_auth_token](https://open.bytedance.com/docs/4/6275/)
@@ -71,20 +84,3 @@ PS: 上述两个接口和 [get_redirect_play](https://open.bytedance.com/docs/4/
 。
 
 #### 更多示例参见 example
-
-
-
-###Change log
-
-#### 0.0.7
-- 代码格式优化
-- 增加travis打包
-
-#### 0.0.6
-- 兼容py2 py3
-
-#### 0.0.5
-- 去掉image X 相关
-- 增加封面图上传接口
-- getUploadAuthToken/getPlayAuthToken/RedirectPlay支持X-Amz-Expires参数
-- 代码格式优化
