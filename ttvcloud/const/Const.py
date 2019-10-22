@@ -24,3 +24,5 @@ VOD_TPL_RESIZE = 'tplv-vod-rs'
 VOD_TPL_CENTER_CROP = 'tplv-vod-cc'
 VOD_TPL_SMART_CROP = 'tplv-vod-cs'
 VOD_TPL_SIG = 'tplv-bd-sig'
+
+LETTER_RUNES = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'

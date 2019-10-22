@@ -1,8 +1,15 @@
 # coding:utf-8
+import base64
 import hashlib
 import hmac
+import random
 import sys
+import uuid
 from functools import reduce
+
+from Crypto.Cipher import AES
+
+from ttvcloud.const.Const import LETTER_RUNES
 
 try:
     from urllib import quote
@@ -49,3 +56,36 @@ class Util(object):
                 hv = '0' + hv
             lst.append(hv)
         return reduce(lambda x, y: x + y, lst)
+
+    @staticmethod
+    def pad(plain_text):
+        block_size = AES.block_size
+
+        number_of_bytes_to_pad = block_size - len(plain_text) % block_size
+        ascii_string = chr(0)
+        padding_str = number_of_bytes_to_pad * ascii_string
+        padded_plain_text = plain_text + padding_str
+        return padded_plain_text
+
+    @staticmethod
+    def generate_access_key_id(prefix):
+        uid = str(uuid.uuid4())
+        uid_base64 = base64.b64encode(uid.replace('-', '').encode(encoding='utf-8'))
+
+        s = uid_base64.decode().replace('=', '').replace('/', '').replace('+', '').replace('-', '')
+        return prefix + s
+
+    @staticmethod
+    def rand_string_runes(length):
+        return ''.join(random.sample(list(LETTER_RUNES), length))
+
+    @staticmethod
+    def aes_encrypt_cbc_with_base64(orig_data, key):
+        generator = AES.new(key, AES.MODE_CBC, key)
+        crypt = generator.encrypt(Util.pad(orig_data))
+        return base64.b64encode(crypt).decode()
+
+    @staticmethod
+    def generate_secret_key():
+        rand_str = Util.rand_string_runes(32)
+        return Util.aes_encrypt_cbc_with_base64(rand_str, 'ttcloudbestcloud')

@@ -2,11 +2,8 @@
 
 from __future__ import print_function
 
-import base64
 import json
 import os
-import random
-import sys
 import threading
 import time
 from zlib import crc32
@@ -16,6 +13,8 @@ from ttvcloud.Credentials import Credentials
 from ttvcloud.ServiceInfo import ServiceInfo
 from ttvcloud.base.Service import Service
 from ttvcloud.const.Const import *
+from ttvcloud.policy import SecurityToken2, InnerToken
+from ttvcloud.util.Util import *
 
 
 class VodService(Service):
@@ -324,3 +323,24 @@ class VodService(Service):
             if r <= 0:
                 return key
         return ''
+
+    def sign_sts2(self, policy, expire):
+        key = self.service_info.credentials.sk
+
+        sts = SecurityToken2()
+        sts.access_key_id = Util.generate_access_key_id('AKTP')
+        sts.secret_access_key = Util.generate_secret_key()
+
+        inner_token = InnerToken()
+        inner_token.lt_access_key_id = self.service_info.credentials.ak
+        inner_token.policy = policy
+        inner_token.signed_secret_access_key = Util.aes_encrypt_cbc_with_base64(sts.secret_access_key,
+                                                                                hashlib.md5(
+                                                                                    key.encode('utf-8')).digest())
+
+        expire = int(time.time()) + expire
+        sts.expired_time = time.strftime('%Y%m%dT%H%M%S', time.localtime(expire))
+        inner_token.expired_time = expire
+        sts.session_token = 'STS2' + base64.b64encode(str(inner_token).encode('utf-8')).decode()
+
+        return sts

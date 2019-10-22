@@ -14,6 +14,12 @@ require python verion >= 2.7
     pip install --upgrade ttvcloud
 ```
 
+如果提示无法找到Crypto包，可以通过以下途径解决
+```
+    pip uninstall crypto
+    pip install pycrypto
+```
+
 ### AK/SK设置
 - 在代码里显示调用VodService的方法set_ak/set_sk
 
@@ -37,6 +43,25 @@ require python verion >= 2.7
 - 注意：IAM模块目前只开放cn-north-1区域
 
 ### API
+
+#### 获取sts2签名
+
+[sign_sts2]()
+```
+    vod_service = VodService()
+
+    # call below method if you dont set ak and sk in $HOME/.vcloud/config
+    # vod_service.set_ak('ak')
+    # vod_service.set_sk('sk')
+
+    statement = Statement.new_allow_statement(['iam:*'], [])
+    inline_policy = Policy([statement])
+    
+    # 60 * 60 (设定有效期一小时)
+    resp = vod_service.sign_sts2(inline_policy, 60 * 60)
+    print(resp)
+
+```
 
 #### 上传
 
