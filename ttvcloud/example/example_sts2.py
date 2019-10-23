@@ -11,9 +11,10 @@ if __name__ == '__main__':
     # vod_service.set_ak('ak')
     # vod_service.set_sk('sk')
 
+    # 给一个权限是所有action的allow的statement
     statement = Statement.new_allow_statement(['iam:*'], [])
     inline_policy = Policy([statement])
 
-    # 60 * 60(设定有效期一小时)
+    # 60 * 60(设定有效期一小时,单位为s)
     resp = vod_service.sign_sts2(inline_policy, 60 * 60)
     print(resp)

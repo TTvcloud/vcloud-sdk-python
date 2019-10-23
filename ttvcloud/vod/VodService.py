@@ -338,6 +338,8 @@ class VodService(Service):
                                                                                 hashlib.md5(
                                                                                     key.encode('utf-8')).digest())
 
+        if expire < 60:
+            expire = 60
         expire = int(time.time()) + expire
         sts.expired_time = time.strftime('%Y%m%dT%H%M%SZ', time.localtime(expire))
         inner_token.expired_time = expire
