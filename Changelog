@@ -1,5 +1,8 @@
 ###Change log
 
+#### 0.0.10
+- 修改ExpiredTime格式
+
 #### 0.0.9
 - 增加sts2签名
 

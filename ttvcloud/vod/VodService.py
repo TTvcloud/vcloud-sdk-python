@@ -339,7 +339,7 @@ class VodService(Service):
                                                                                     key.encode('utf-8')).digest())
 
         expire = int(time.time()) + expire
-        sts.expired_time = time.strftime('%Y%m%dT%H%M%S', time.localtime(expire))
+        sts.expired_time = time.strftime('%Y%m%dT%H%M%SZ', time.localtime(expire))
         inner_token.expired_time = expire
         sts.session_token = 'STS2' + base64.b64encode(str(inner_token).encode('utf-8')).decode()
 
