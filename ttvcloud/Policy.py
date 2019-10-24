@@ -6,7 +6,7 @@ except:
     from ttvcloud.EncoderV3 import JSONEncoder
 
 
-class ComplexEncoder(json.JSONEncoder):
+class ComplexEncoder(JSONEncoder):
     def default(self, o):
         if isinstance(o, Statement):
             return {'Effect_1': o.effect,
