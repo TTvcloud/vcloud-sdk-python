@@ -1,5 +1,31 @@
 # coding:utf-8
 import json
+try:
+    from ttvcloud.Encoder import JSONEncoder
+except:
+    from ttvcloud.EncoderV3 import JSONEncoder
+
+
+class ComplexEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, Statement):
+            return {'Effect_1': o.effect,
+                    'Action_2': o.action,
+                    'Resource_3': o.resource}
+        if isinstance(o, InnerToken):
+            return {
+                'LTAccessKeyId_1': o.lt_access_key_id,
+                'AccessKeyId_2': o.access_key_id,
+                'SignedSecretAccessKey_3': o.signed_secret_access_key,
+                'ExpiredTime_4': o.expired_time,
+                'PolicyString_5': o.policy_string,
+                'Signature_6': o.signature
+            }
+        if isinstance(o, Policy):
+            return {
+                'Statement_1': [item for item in o.statements]
+            }
+        return JSONEncoder.default(self, o)
 
 
 class Policy(object):
@@ -50,13 +76,8 @@ class SecurityToken2(object):
 class InnerToken(object):
     def __init__(self):
         self.lt_access_key_id = ''
+        self.access_key_id = ''
         self.signed_secret_access_key = ''
         self.expired_time = 0
-        self.policy = ''
-
-    def __str__(self):
-        return json.dumps({
-            'LTAccessKeyId': self.lt_access_key_id,
-            'SignedSecretAccessKey': self.signed_secret_access_key,
-            'ExpiredTime': self.expired_time
-        })
+        self.policy_string = ''
+        self.signature = ''

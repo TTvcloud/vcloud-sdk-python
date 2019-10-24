@@ -2,7 +2,7 @@
 from __future__ import print_function
 
 from ttvcloud.vod.VodService import VodService
-from ttvcloud.policy import *
+from ttvcloud.Policy import *
 
 if __name__ == '__main__':
     vod_service = VodService()
