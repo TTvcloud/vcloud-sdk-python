@@ -1,31 +1,27 @@
 # coding:utf-8
 import json
-try:
-    from ttvcloud.Encoder import JSONEncoder
-except:
-    from ttvcloud.EncoderV3 import JSONEncoder
 
 
-class ComplexEncoder(JSONEncoder):
+class ComplexEncoder(json.JSONEncoder):
     def default(self, o):
         if isinstance(o, Statement):
-            return {'Effect_1': o.effect,
-                    'Action_2': o.action,
-                    'Resource_3': o.resource}
+            return {'Effect': o.effect,
+                    'Action': o.action,
+                    'Resource': o.resource}
         if isinstance(o, InnerToken):
             return {
-                'LTAccessKeyId_1': o.lt_access_key_id,
-                'AccessKeyId_2': o.access_key_id,
-                'SignedSecretAccessKey_3': o.signed_secret_access_key,
-                'ExpiredTime_4': o.expired_time,
-                'PolicyString_5': o.policy_string,
-                'Signature_6': o.signature
+                'LTAccessKeyId': o.lt_access_key_id,
+                'AccessKeyId': o.access_key_id,
+                'SignedSecretAccessKey': o.signed_secret_access_key,
+                'ExpiredTime': o.expired_time,
+                'PolicyString': o.policy_string,
+                'Signature': o.signature
             }
         if isinstance(o, Policy):
             return {
-                'Statement_1': [item for item in o.statements]
+                'Statement': [item for item in o.statements]
             }
-        return JSONEncoder.default(self, o)
+        return json.JSONEncoder.default(self, o)
 
 
 class Policy(object):
@@ -81,3 +77,13 @@ class InnerToken(object):
         self.expired_time = 0
         self.policy_string = ''
         self.signature = ''
+
+    def __str__(self):
+        return json.dumps({
+            'LTAccessKeyId': self.lt_access_key_id,
+            'AccessKeyId': self.access_key_id,
+            'SignedSecretAccessKey': self.signed_secret_access_key,
+            'ExpiredTime': self.expired_time,
+            'PolicyString': self.policy_string,
+            'Signature': self.signature
+        })

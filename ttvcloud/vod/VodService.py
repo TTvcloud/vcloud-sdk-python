@@ -10,10 +10,10 @@ from zlib import crc32
 
 from ttvcloud.ApiInfo import ApiInfo
 from ttvcloud.Credentials import Credentials
+from ttvcloud.Policy import SecurityToken2, InnerToken, ComplexEncoder
 from ttvcloud.ServiceInfo import ServiceInfo
 from ttvcloud.base.Service import Service
 from ttvcloud.const.Const import *
-from ttvcloud.Policy import SecurityToken2, InnerToken, ComplexEncoder
 from ttvcloud.util.Util import *
 
 
@@ -351,5 +351,4 @@ class VodService(Service):
 
         sts.session_token = 'STS2' + base64.b64encode(
             json.dumps(inner_token, cls=ComplexEncoder, sort_keys=True).replace(' ', '').encode('utf-8')).decode()
-
         return sts
