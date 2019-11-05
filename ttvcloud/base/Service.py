@@ -50,16 +50,16 @@ class Service(object):
 
         return SignerV4.sign_url(r, self.service_info.credentials)
 
-    def get(self, api, params):
+    def get(self, api, params, doseq=0):
         if not (api in self.api_info):
             raise Exception("no such api")
         api_info = self.api_info[api]
 
-        r = self.prepare_request(api_info, params)
+        r = self.prepare_request(api_info, params, doseq)
 
         SignerV4.sign(r, self.service_info.credentials)
 
-        url = r.build()
+        url = r.build(doseq)
         resp = self.session.get(url, headers=r.headers,
                                 timeout=(self.service_info.connection_timeout, self.service_info.socket_timeout))
         if resp.status_code == 200:
@@ -111,12 +111,13 @@ class Service(object):
             else:
                 return False, resp.text
 
-    def prepare_request(self, api_info, params):
+    def prepare_request(self, api_info, params, doseq=0):
         for key in params:
             if type(params[key]) == int or type(params[key]) == float:
                 params[key] = str(params[key])
             elif type(params[key]) == list:
-                params[key] = ','.join(params[key])
+                if not doseq:
+                    params[key] = ','.join(params[key])
 
         connection_timeout = self.service_info.connection_timeout
         socket_timeout = self.service_info.socket_timeout

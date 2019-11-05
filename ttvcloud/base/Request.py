@@ -47,5 +47,5 @@ class Request(object):
     def set_socket_timeout(self, socket_timeout):
         self.socket_timeout = socket_timeout
 
-    def build(self):
-        return self.schema + '://' + self.host + self.path + '?' + urlencode(self.query)
+    def build(self, doseq=0):
+        return self.schema + '://' + self.host + self.path + '?' + urlencode(self.query, doseq)

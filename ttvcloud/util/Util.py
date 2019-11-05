@@ -10,6 +10,7 @@ from functools import reduce
 from Crypto.Cipher import AES
 
 from ttvcloud.const.Const import LETTER_RUNES
+from zlib import crc32
 
 try:
     from urllib import quote
@@ -26,8 +27,11 @@ class Util(object):
     def norm_query(params):
         query = ''
         for key in sorted(params.keys()):
-            query = query + quote(key, safe='-_.~') + '=' + quote(params[key],
-                                                                  safe='-_.~') + '&'
+            if type(params[key]) == list:
+                for k in params[key]:
+                    query = query + quote(key, safe='-_.~') + '=' + quote(k, safe='-_.~') + '&'
+            else:
+                query = query + quote(key, safe='-_.~') + '=' + quote(params[key], safe='-_.~') + '&'
         query = query[:-1]
         return query.replace('+', '%20')
 
@@ -89,3 +93,10 @@ class Util(object):
     def generate_secret_key():
         rand_str = Util.rand_string_runes(32)
         return Util.aes_encrypt_cbc_with_base64(rand_str, 'ttcloudbestcloud')
+
+    @staticmethod
+    def crc32(file_path):
+        prev = 0
+        for eachLine in open(file_path, "rb"):
+            prev = crc32(eachLine, prev)
+        return prev & 0xFFFFFFFF
