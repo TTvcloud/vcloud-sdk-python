@@ -10,10 +10,10 @@ from zlib import crc32
 
 from ttvcloud.ApiInfo import ApiInfo
 from ttvcloud.Credentials import Credentials
-from ttvcloud.Policy import SecurityToken2, InnerToken, ComplexEncoder
 from ttvcloud.ServiceInfo import ServiceInfo
 from ttvcloud.base.Service import Service
 from ttvcloud.const.Const import *
+from ttvcloud.Policy import SecurityToken2, InnerToken, ComplexEncoder
 from ttvcloud.util.Util import *
 
 
