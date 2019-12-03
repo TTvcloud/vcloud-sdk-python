@@ -343,6 +343,8 @@ class VodService(Service):
         expire = int(time.time()) + expire
         expire_time = time.strftime('%Y-%m-%dT%H:%M:%S%z', time.localtime(expire))
         pos = expire_time.find('+')
+        if pos == -1:
+            pos = expire_time.find('-')
         sts.expired_time = expire_time[:pos+3] + ':' + expire_time[pos+3:pos+5]
         inner_token.expired_time = expire
 
