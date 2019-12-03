@@ -341,7 +341,9 @@ class VodService(Service):
         if expire < 60:
             expire = 60
         expire = int(time.time()) + expire
-        sts.expired_time = time.strftime('%Y%m%dT%H%M%SZ', time.localtime(expire))
+        expire_time = time.strftime('%Y-%m-%dT%H:%M:%S%z', time.localtime(expire))
+        pos = expire_time.find('+')
+        sts.expired_time = expire_time[:pos+3] + ':' + expire_time[pos+3:pos+5]
         inner_token.expired_time = expire
 
         sign_str = '{}|{}|{}|{}|{}'.format(inner_token.lt_access_key_id, inner_token.access_key_id,
