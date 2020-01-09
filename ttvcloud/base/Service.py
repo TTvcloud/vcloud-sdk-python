@@ -5,8 +5,8 @@ from collections import OrderedDict
 
 import requests
 
-from ttvcloud.base.Request import Request
 from ttvcloud.auth.SignerV4 import SignerV4
+from ttvcloud.base.Request import Request
 
 
 class Service(object):
@@ -21,6 +21,8 @@ class Service(object):
             self.service_info.set_ak(os.environ['VCLOUD_ACCESSKEY'])
             self.service_info.set_sk(os.environ['VCLOUD_SECRETKEY'])
         else:
+            if os.environ.get('HOME', None) is None:
+                return
 
             path = os.environ['HOME'] + '/.vcloud/config'
             if os.path.isfile(path):
