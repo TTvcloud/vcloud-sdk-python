@@ -1,5 +1,8 @@
 ###Change log
 
+#### 0.0.19
+- CommitUpload支持CallbackArgs
+
 #### 0.0.18
 - fix HOME env
 

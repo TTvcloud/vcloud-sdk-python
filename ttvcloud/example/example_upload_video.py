@@ -24,7 +24,7 @@ if __name__ == '__main__':
     snapshot_function = {'Name': 'Snapshot', 'Input': snapshot_function_input}
     function_list.append(snapshot_function)
 
-    resp = vod_service.upload_video(space_name, file_path, FILE_TYPE_VIDEO, function_list)
+    resp = vod_service.upload_video(space_name, file_path, FILE_TYPE_VIDEO, function_list, callback_args='my callback args')
     print(resp)
 
     print('*' * 100)

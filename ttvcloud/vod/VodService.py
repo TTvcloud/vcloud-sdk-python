@@ -174,13 +174,13 @@ class VodService(Service):
 
         return oid, session_key, avg_speed
 
-    def upload_video(self, space_name, file_path, file_type, funtions_list):
+    def upload_video(self, space_name, file_path, file_type, funtions_list, callback_args=''):
         oid, session_key, avg_speed = self.upload(space_name, file_path, file_type)
 
         commit_upload_request = {'SpaceName': space_name}
 
         body = dict()
-        body['CallbackArgs'] = ''
+        body['CallbackArgs'] = callback_args
         body['SessionKey'] = session_key
         body['Functions'] = funtions_list
         body = json.dumps(body)
