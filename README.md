@@ -14,11 +14,6 @@ require python verion >= 2.7
     pip install --upgrade ttvcloud
 ```
 
-如果提示无法找到Crypto包，可以通过以下途径解决
-```
-    pip uninstall crypto
-    pip install pycrypto
-```
 
 ### AK/SK设置
 - 在代码里显示调用VodService的方法set_ak/set_sk

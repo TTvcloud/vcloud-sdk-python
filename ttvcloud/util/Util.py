@@ -86,8 +86,12 @@ class Util(object):
     @staticmethod
     def aes_encrypt_cbc_with_base64(orig_data, key):
         generator = AES.new(key, AES.MODE_CBC, key)
-        crypt = generator.encrypt(Util.pad(orig_data))
-        return base64.b64encode(crypt).decode()
+        if sys.version_info[0] == 3:
+            crypt = generator.encrypt(Util.pad(orig_data).encode('utf-8'))
+            return base64.b64encode(crypt).decode()
+        else:
+            crypt = generator.encrypt(Util.pad(orig_data))
+            return base64.b64encode(crypt)
 
     @staticmethod
     def generate_secret_key():

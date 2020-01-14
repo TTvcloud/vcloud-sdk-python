@@ -1,5 +1,8 @@
 ###Change log
 
+#### 0.0.20
+- use pycryptodome
+
 #### 0.0.19
 - CommitUpload支持CallbackArgs
 

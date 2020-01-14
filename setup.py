@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="ttvcloud",
-    version="0.0.19",
+    version="0.0.20",
     keywords=("pip", "ttvcloud", "vcloud-sdk-python"),
     description="The TTvcloud SDK for Python",
     license="MIT Licence",
@@ -16,5 +16,5 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     platforms="any",
-    install_requires=["requests", "pytz", "pycrypto"]
+    install_requires=["requests", "pytz", "pycryptodome"]
 )
