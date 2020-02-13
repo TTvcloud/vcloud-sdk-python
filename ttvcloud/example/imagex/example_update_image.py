@@ -11,7 +11,7 @@ if __name__ == '__main__':
     imagex_service.set_sk('sk')
 
     service_id = 'your service id'
-    file_paths = ['file path 1']
+    urls = ['image url 1']
 
-    resp = imagex_service.upload_image(service_id, file_paths)
+    resp = imagex_service.update_image_urls(service_id, urls)
     print(resp)
