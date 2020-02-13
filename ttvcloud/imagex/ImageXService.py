@@ -11,6 +11,7 @@ from ttvcloud.ServiceInfo import ServiceInfo
 from ttvcloud.base.Service import Service
 from ttvcloud.const.Const import *
 from ttvcloud.util.Util import *
+from ttvcloud.Policy import *
 
 IMAGEX_HOST_CN = "imagex.bytedanceapi.com"
 IMAGEX_HOST_VA = "imagex.us-east-1.bytedanceapi.com"
@@ -18,6 +19,8 @@ IMAGEX_HOST_SG = "imagex.ap-singapore-1.bytedanceapi.com"
 
 IMAGEX_SERVICE_NAME = "ImageX"
 IMAGEX_API_VERSION = "2018-08-01"
+
+ResourceServiceIdTRN = "trn:ImageX:*:*:ServiceId/%s"
 
 service_info_map = {
     REGION_CN_NORTH1: ServiceInfo(
@@ -128,6 +131,7 @@ class ImageXService(Service):
                 raise Exception("upload %s error" % url)
             idx += 1
 
+    # 获取临时上传凭证
     def get_upload_auth_token(self, params):
         apply_token = self.get_sign_url('ApplyImageUpload', params)
         commit_token = self.get_sign_url('CommitImageUpload', params)
@@ -138,3 +142,17 @@ class ImageXService(Service):
             return base64.b64encode(data.encode('utf-8')).decode('utf-8')
         else:
             return base64.b64encode(data.decode('utf-8'))
+
+    # 获取上传临时密钥
+    def get_upload_auth(self, service_ids, expire=60*60):
+        actions = ['ImageX:ApplyImageUpload', 'ImageX:CommitImageUpload']
+        resources = []
+        if len(service_ids) == 0:
+            resources.append(ResourceServiceIdTRN % '*')
+        else:
+            for sid in service_ids:
+                resources.append(ResourceServiceIdTRN % sid)
+
+        statement = Statement.new_allow_statement(actions, resources)
+        inline_policy = Policy([statement])
+        return self.sign_sts2(inline_policy, expire)
