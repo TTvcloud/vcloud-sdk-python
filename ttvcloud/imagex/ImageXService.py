@@ -10,7 +10,7 @@ from ttvcloud.Credentials import Credentials
 from ttvcloud.ServiceInfo import ServiceInfo
 from ttvcloud.base.Service import Service
 from ttvcloud.const.Const import *
-from ttvcloud.util.Util import Util
+from ttvcloud.util.Util import *
 
 IMAGEX_HOST_CN = "imagex.bytedanceapi.com"
 IMAGEX_HOST_VA = "imagex.us-east-1.bytedanceapi.com"
@@ -38,10 +38,10 @@ service_info_map = {
 }
 
 api_info = {
-    "ApplyUploadImageFile":
-        ApiInfo("GET", "/", {"Action": "ApplyUploadImageFile", "Version": IMAGEX_API_VERSION}, {}, {}),
-    "CommitUploadImageFile":
-        ApiInfo("POST", "/", {"Action": "CommitUploadImageFile", "Version": IMAGEX_API_VERSION}, {}, {}),
+    "ApplyImageUpload":
+        ApiInfo("GET", "/", {"Action": "ApplyImageUpload", "Version": IMAGEX_API_VERSION}, {}, {}),
+    "CommitImageUpload":
+        ApiInfo("POST", "/", {"Action": "CommitImageUpload", "Version": IMAGEX_API_VERSION}, {}, {}),
 }
 
 
@@ -64,41 +64,54 @@ class ImageXService(Service):
 
     # upload
     def apply_upload(self, params):
-        res = self.get('ApplyUploadImageFile', params, doseq=1)
+        res = self.get('ApplyImageUpload', params, doseq=1)
         if res == '':
             raise Exception("empty response")
         res_json = json.loads(res)
         return res_json
 
     def commit_upload(self, params, body):
-        res = self.json('CommitUploadImageFile', params, body)
+        res = self.json('CommitImageUpload', params, body)
         if res == '':
             raise Exception("empty response")
         res_json = json.loads(res)
         return res_json
 
-    def upload_image(self, service_id, file_paths, keys):
+    def upload_image(self, service_id, file_paths, keys=[], space_name=""):
         for p in file_paths:
             if not os.path.isfile(p):
                 raise Exception("no such file on file path %s" % p)
 
-        apply_upload_request = {'ServiceId': service_id, 'UploadNum': len(file_paths), 'StoreKeys': keys}
+        apply_upload_request = {
+            'ServiceId': service_id,
+            'UploadNum': len(file_paths),
+            'StoreKeys': keys,
+            'SpaceName': space_name
+        }
         resp = self.apply_upload(apply_upload_request)
         if 'Error' in resp['ResponseMetadata']:
             raise Exception(resp['ResponseMetadata'])
 
         result = resp['Result']
-        if len(result['UploadHosts']) == 0:
-            raise Exception("no upload host found")
-        elif len(result['StoreInfos']) != len(file_paths):
-            raise Exception("store info len %d != upload num %d" % (len(result['StoreInfos']), len(file_paths)))
+        reqid = result['RequestId']
+        addr = result['UploadAddress']
+        if len(addr['UploadHosts']) == 0:
+            raise Exception("no upload host found, reqid %s" % reqid)
+        elif len(addr['StoreInfos']) != len(file_paths):
+            raise Exception("store info len %d != upload num %d, reqid %s" % (len(result['StoreInfos']), len(file_paths), reqid))
 
-        session_key = result['SessionKey']
-        host = result['UploadHosts'][0]
-        self.do_upload(file_paths, host, result['StoreInfos'])
+        session_key = addr['SessionKey']
+        host = addr['UploadHosts'][0]
+        self.do_upload(file_paths, host, addr['StoreInfos'])
 
-        commit_upload_request = {'ServiceId': service_id, 'SessionKey': session_key}
-        resp = self.commit_upload(commit_upload_request, "")
+        commit_upload_request = {
+            'ServiceId': service_id,
+            'SpaceName': space_name
+        }
+        commit_upload_body = {
+            'SessionKey': session_key
+        }
+        resp = self.commit_upload(commit_upload_request, json.dumps(commit_upload_body))
         if 'Error' in resp['ResponseMetadata']:
             raise Exception(resp['ResponseMetadata'])
         return resp['Result']
@@ -114,3 +127,14 @@ class ImageXService(Service):
             if not upload_status:
                 raise Exception("upload %s error" % url)
             idx += 1
+
+    def get_upload_auth_token(self, params):
+        apply_token = self.get_sign_url('ApplyImageUpload', params)
+        commit_token = self.get_sign_url('CommitImageUpload', params)
+
+        ret = {'Version': 'v1', 'ApplyUploadToken': apply_token, 'CommitUploadToken': commit_token}
+        data = json.dumps(ret)
+        if sys.version_info[0] == 3:
+            return base64.b64encode(data.encode('utf-8')).decode('utf-8')
+        else:
+            return base64.b64encode(data.decode('utf-8'))

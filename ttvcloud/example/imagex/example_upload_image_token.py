@@ -10,8 +10,8 @@ if __name__ == '__main__':
     imagex_service.set_ak('ak')
     imagex_service.set_sk('sk')
 
-    service_id = 'your service id'
-    file_paths = ['file path 1']
+    params = dict()
+    params['ServiceId'] = 'your service id'
 
-    resp = imagex_service.upload_image(service_id, file_paths)
+    resp = imagex_service.get_upload_auth_token(params)
     print(resp)
