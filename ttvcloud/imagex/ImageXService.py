@@ -45,6 +45,8 @@ api_info = {
         ApiInfo("GET", "/", {"Action": "ApplyImageUpload", "Version": IMAGEX_API_VERSION}, {}, {}),
     "CommitImageUpload":
         ApiInfo("POST", "/", {"Action": "CommitImageUpload", "Version": IMAGEX_API_VERSION}, {}, {}),
+    "UpdateImageUploadFiles":
+        ApiInfo("POST", "/", {"Action": "UpdateImageUploadFiles", "Version": IMAGEX_API_VERSION}, {}, {})
 }
 
 
@@ -156,3 +158,23 @@ class ImageXService(Service):
         statement = Statement.new_allow_statement(actions, resources)
         inline_policy = Policy([statement])
         return self.sign_sts2(inline_policy, expire)
+
+    # 更新图片URL：action为0表示刷新，为1表示禁用，为2表示解禁
+    def update_image_urls(self, service_id, urls, action=0):
+        if action < 0 or action > 2:
+            raise Exception("update action should be [0,2], %d" % action)
+
+        query = {
+            'ServiceId': service_id
+        }
+        body = {
+            'Action': action,
+            'ImageUrls': urls
+        }
+        res = self.json("UpdateImageUploadFiles", query, json.dumps(body))
+        if res == '':
+            raise Exception("empty response")
+        res_json = json.loads(res)
+        if 'Error' in res_json['ResponseMetadata']:
+            raise Exception(res_json['ResponseMetadata'])
+        return res_json['Result']
