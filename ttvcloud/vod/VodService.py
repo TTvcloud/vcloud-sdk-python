@@ -6,14 +6,12 @@ import json
 import os
 import threading
 import time
-from zlib import crc32
 
 from ttvcloud.ApiInfo import ApiInfo
 from ttvcloud.Credentials import Credentials
 from ttvcloud.ServiceInfo import ServiceInfo
 from ttvcloud.base.Service import Service
 from ttvcloud.const.Const import *
-from ttvcloud.Policy import SecurityToken2, InnerToken, ComplexEncoder
 from ttvcloud.util.Util import *
 
 
@@ -45,6 +43,8 @@ class VodService(Service):
                                           Credentials('', '', 'vod', 'ap-singapore-1'), 5000, 5000),
             'us-east-1': ServiceInfo("vod.us-east-1.bytedanceapi.com", {'Accept': 'application/json'},
                                      Credentials('', '', 'vod', 'us-east-1'), 5000, 5000),
+            'boe': ServiceInfo("staging-openapi-boe.byted.org", {'Accept': 'application/json'},
+                               Credentials('', '', 'vod', 'boe'), 5000, 5000),
         }
         service_info = service_info_map.get(region, None)
         if not service_info:
