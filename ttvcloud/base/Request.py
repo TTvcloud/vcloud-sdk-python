@@ -9,7 +9,7 @@ except:
 
 class Request(object):
     def __init__(self):
-        self.schema = 'http'
+        self.schema = ''
         self.method = ''
         self.host = ''
         self.path = ''

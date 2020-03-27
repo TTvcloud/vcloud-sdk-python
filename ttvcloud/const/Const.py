@@ -4,6 +4,10 @@ REGION_CN_NORTH1 = "cn-north-1"
 REGION_US_EAST1 = "us-east-1"
 REGION_AP_SINGAPORE1 = "ap-singapore-1"
 
+INNER_REGION_CN_NORTH1 = "cn-north-1-inner"
+INNER_REGION_US_EAST1 = "us-east-1-inner"
+INNER_REGION_AP_SINGAPORE1 = "ap-singapore-1-inner"
+
 HTTP = 'http'
 HTTPS = 'https'
 
