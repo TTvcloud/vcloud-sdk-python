@@ -1,5 +1,8 @@
 ###Change log
 
+#### 0.0.24
+- ImageX新增内网域名
+
 #### 0.0.21
 - 更新ImageX上传接口
 - 增加ImageX刷新接口
