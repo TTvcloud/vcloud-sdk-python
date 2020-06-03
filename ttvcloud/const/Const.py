@@ -34,3 +34,12 @@ VOD_TPL_SMART_CROP = 'tplv-vod-cs'
 VOD_TPL_SIG = 'tplv-bd-sig'
 
 LETTER_RUNES = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+RESOURCE_SPACE_FORMAT = "trn:vod:%s:*:space/%s"
+RESOURCE_VIDEO_FORMAT = 'trn:vod::*:video_id/%s'
+RESOURCE_STREAM_TYPE_FORMAT = 'trn:vod:::stream_type/%s'
+RESOURCE_WATERMARK_FORMAT = 'trn:vod::*:watermark/%s'
+
+ACTION_VOD_GET_PLAY_INFO = "vod:GetPlayInfo"
+
+STAR = '*'
