@@ -65,7 +65,9 @@ api_info = {
     "CommitImageUpload":
         ApiInfo("POST", "/", {"Action": "CommitImageUpload", "Version": IMAGEX_API_VERSION}, {}, {}),
     "UpdateImageUploadFiles":
-        ApiInfo("POST", "/", {"Action": "UpdateImageUploadFiles", "Version": IMAGEX_API_VERSION}, {}, {})
+        ApiInfo("POST", "/", {"Action": "UpdateImageUploadFiles", "Version": IMAGEX_API_VERSION}, {}, {}),
+    "PreviewImageUploadFile":
+        ApiInfo("GET", "/", {"Action": "PreviewImageUploadFile", "Version": IMAGEX_API_VERSION}, {}, {})
 }
 
 
@@ -201,6 +203,20 @@ class ImageXService(Service):
             'ImageUrls': urls
         }
         res = self.json("UpdateImageUploadFiles", query, json.dumps(body))
+        if res == '':
+            raise Exception("empty response")
+        res_json = json.loads(res)
+        if 'Error' in res_json['ResponseMetadata']:
+            raise Exception(res_json['ResponseMetadata'])
+        return res_json['Result']
+
+    # 获取图片信息
+    def get_image_info(self, service_id, store_uri):
+        query = {
+            'ServiceId': service_id,
+            'StoreUri': store_uri,
+        }
+        res = self.get('PreviewImageUploadFile', query)
         if res == '':
             raise Exception("empty response")
         res_json = json.loads(res)
