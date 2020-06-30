@@ -15,3 +15,7 @@ if __name__ == '__main__':
 
     resp = imagex_service.upload_image(service_id, file_paths)
     print(resp)
+
+    img_datas = ['image binary data 1']
+    resp = imagex_service.upload_image_data(service_id, img_datas)
+    print(resp)

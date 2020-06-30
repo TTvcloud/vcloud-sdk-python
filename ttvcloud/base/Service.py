@@ -123,6 +123,13 @@ class Service(object):
             else:
                 return False, resp.text
 
+    def put_data(self, url, data, headers):
+        resp = self.session.put(url, headers=headers, data=data)
+        if resp.status_code == 200:
+            return True, resp.text
+        else:
+            return False, resp.text
+
     def prepare_request(self, api_info, params, doseq=0):
         for key in params:
             if type(params[key]) == int or type(params[key]) == float:

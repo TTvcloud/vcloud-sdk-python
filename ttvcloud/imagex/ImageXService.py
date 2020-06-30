@@ -101,14 +101,22 @@ class ImageXService(Service):
         res_json = json.loads(res)
         return res_json
 
+    # 上传本地图片文件
     def upload_image(self, service_id, file_paths, keys=[], space_name=""):
+        img_datas = []
         for p in file_paths:
             if not os.path.isfile(p):
                 raise Exception("no such file on file path %s" % p)
+            in_file = open(p, "rb")
+            img_datas.append(in_file.read())
+            in_file.close()
+        return self.upload_image_data(service_id, img_datas, keys, space_name)
 
+    # 上传图片二进制数据
+    def upload_image_data(self, service_id, img_datas, keys=[], space_name=""):
         apply_upload_request = {
             'ServiceId': service_id,
-            'UploadNum': len(file_paths),
+            'UploadNum': len(img_datas),
             'StoreKeys': keys,
             'SpaceName': space_name
         }
@@ -121,12 +129,14 @@ class ImageXService(Service):
         addr = result['UploadAddress']
         if len(addr['UploadHosts']) == 0:
             raise Exception("no upload host found, reqid %s" % reqid)
-        elif len(addr['StoreInfos']) != len(file_paths):
-            raise Exception("store info len %d != upload num %d, reqid %s" % (len(result['StoreInfos']), len(file_paths), reqid))
+        elif len(addr['StoreInfos']) != len(img_datas):
+            raise Exception(
+                "store info len %d != upload num %d, reqid %s" % (
+                    len(result['StoreInfos']), len(img_datas), reqid))
 
         session_key = addr['SessionKey']
         host = addr['UploadHosts'][0]
-        self.do_upload(file_paths, host, addr['StoreInfos'])
+        self.do_upload(img_datas, host, addr['StoreInfos'])
 
         commit_upload_request = {
             'ServiceId': service_id,
@@ -140,16 +150,16 @@ class ImageXService(Service):
             raise Exception(resp['ResponseMetadata'])
         return resp['Result']
 
-    def do_upload(self, file_paths, host, store_infos):
+    def do_upload(self, img_datas, host, store_infos):
         idx = 0
-        for p in file_paths:
+        for d in img_datas:
             oid = store_infos[idx]['StoreUri']
             auth = store_infos[idx]['Auth']
             url = 'http://{}/{}'.format(host, oid)
-            headers = {'Content-CRC32': hex(Util.crc32(p))[2:], 'Authorization': auth}
-            upload_status, resp = self.put(url, p, headers)
+            headers = {'Content-CRC32': hex(crc32(d) & 0xFFFFFFFF)[2:], 'Authorization': auth}
+            upload_status, resp = self.put_data(url, d, headers)
             if not upload_status:
-                raise Exception("upload %s error" % url)
+                raise Exception("upload %s error %s" % (url, resp))
             idx += 1
 
     # 获取临时上传凭证
