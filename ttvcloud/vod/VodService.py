@@ -13,7 +13,7 @@ from ttvcloud.Credentials import Credentials
 from ttvcloud.ServiceInfo import ServiceInfo
 from ttvcloud.base.Service import Service
 from ttvcloud.const.Const import *
-from ttvcloud.Policy import SecurityToken2, InnerToken, ComplexEncoder
+from ttvcloud.Policy import SecurityToken2, InnerToken, ComplexEncoder, Policy, Statement
 from ttvcloud.util.Util import *
 
 
@@ -323,3 +323,26 @@ class VodService(Service):
             if r <= 0:
                 return key
         return ''
+
+    def get_video_play_auth_with_expired_time(self, vid_list, stream_type_list, watermark_list, expired_time):
+        actions = [ACTION_VOD_GET_PLAY_INFO]
+        resources = []
+
+        self.add_resource_format(vid_list, resources, RESOURCE_VIDEO_FORMAT)
+        self.add_resource_format(stream_type_list, resources, RESOURCE_STREAM_TYPE_FORMAT)
+        self.add_resource_format(watermark_list, resources, RESOURCE_WATERMARK_FORMAT)
+
+        statement = Statement.new_allow_statement(actions, resources)
+        inline_policy = Policy([statement])
+        return self.sign_sts2(inline_policy, expired_time)
+
+    @staticmethod
+    def add_resource_format(v_list, resources, resource_format):
+        if len(v_list) == 0:
+            resources.append(resource_format % STAR)
+        else:
+            for value in v_list:
+                resources.append(resource_format % value)
+
+    def get_video_play_auth(self, vid_list, stream_type_list, watermark_list):
+        return self.get_video_play_auth_with_expired_time(vid_list, stream_type_list, watermark_list, 60 * 60)
