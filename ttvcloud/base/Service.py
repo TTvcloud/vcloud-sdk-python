@@ -111,7 +111,7 @@ class Service(object):
         resp = self.session.post(url, headers=r.headers, data=r.body,
                                  timeout=(self.service_info.connection_timeout, self.service_info.socket_timeout))
         if resp.status_code == 200:
-            return resp.text
+            return json.dumps(resp.json())
         else:
             return ''
 
