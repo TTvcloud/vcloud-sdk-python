@@ -59,13 +59,15 @@ class SecurityToken2(object):
         self.secret_access_key = ''
         self.session_token = ''
         self.expired_time = ''
+        self.current_time = ''
 
     def __str__(self):
         return json.dumps({
             'AccessKeyId': self.access_key_id,
             'SecretAccessKey': self.secret_access_key,
             'SessionToken': self.session_token,
-            'ExpiredTime': self.expired_time
+            'ExpiredTime': self.expired_time,
+            'CurrentTime': self.current_time
         })
 
 

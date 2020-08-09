@@ -85,6 +85,8 @@ class Util(object):
 
     @staticmethod
     def aes_encrypt_cbc_with_base64(orig_data, key):
+        # type(orig_data) == <class 'str'>
+        # type(key) == <class 'bytes'>
         generator = AES.new(key, AES.MODE_CBC, key)
         if sys.version_info[0] == 3:
             crypt = generator.encrypt(Util.pad(orig_data).encode('utf-8'))
@@ -96,7 +98,7 @@ class Util(object):
     @staticmethod
     def generate_secret_key():
         rand_str = Util.rand_string_runes(32)
-        return Util.aes_encrypt_cbc_with_base64(rand_str, 'ttcloudbestcloud')
+        return Util.aes_encrypt_cbc_with_base64(rand_str, 'bytedance-isgood'.encode('utf-8'))
 
     @staticmethod
     def crc32(file_path):

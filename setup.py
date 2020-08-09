@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="ttvcloud",
-    version="0.0.26",
+    version="0.0.27",
     keywords=("pip", "ttvcloud", "vcloud-sdk-python"),
     description="The TTvcloud SDK for Python",
     license="MIT Licence",

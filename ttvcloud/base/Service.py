@@ -1,14 +1,14 @@
 # coding: utf-8
 import json
 import os
+import time
 from collections import OrderedDict
 
 import requests
-import time
 
+from ttvcloud.Policy import SecurityToken2, InnerToken, ComplexEncoder
 from ttvcloud.auth.SignerV4 import SignerV4
 from ttvcloud.base.Request import Request
-from ttvcloud.Policy import SecurityToken2, InnerToken, ComplexEncoder
 from ttvcloud.util.Util import *
 
 
@@ -176,21 +176,19 @@ class Service(object):
         sts = SecurityToken2()
         sts.access_key_id = Util.generate_access_key_id('AKTP')
         sts.secret_access_key = Util.generate_secret_key()
+        now = int(time.time())
+        sts.current_time = Service.to_rfc3339(now)
+
+        if expire < 60:
+            expire = 60
+        expire = now + expire
+        sts.expired_time = Service.to_rfc3339(expire)
 
         inner_token = InnerToken()
         inner_token.lt_access_key_id = self.service_info.credentials.ak
         inner_token.access_key_id = sts.access_key_id
         inner_token.policy_string = json.dumps(policy, cls=ComplexEncoder, sort_keys=True).replace(' ', '')
         inner_token.signed_secret_access_key = Util.aes_encrypt_cbc_with_base64(sts.secret_access_key, key)
-
-        if expire < 60:
-            expire = 60
-        expire = int(time.time()) + expire
-        expire_time = time.strftime('%Y-%m-%dT%H:%M:%S%z', time.localtime(expire))
-        pos = expire_time.find('+')
-        if pos == -1:
-            pos = expire_time.find('-')
-        sts.expired_time = expire_time[:pos+3] + ':' + expire_time[pos+3:pos+5]
         inner_token.expired_time = expire
 
         sign_str = '{}|{}|{}|{}|{}'.format(inner_token.lt_access_key_id, inner_token.access_key_id,
@@ -201,3 +199,11 @@ class Service(object):
         sts.session_token = 'STS2' + base64.b64encode(
             json.dumps(inner_token, cls=ComplexEncoder, sort_keys=True).replace(' ', '').encode('utf-8')).decode()
         return sts
+
+    @staticmethod
+    def to_rfc3339(t):
+        format_time = time.strftime('%Y-%m-%dT%H:%M:%S%z', time.localtime(t))
+        pos = format_time.find('+')
+        if pos == -1:
+            pos = format_time.find('-')
+        return format_time[:pos + 3] + ':' + format_time[pos + 3:pos + 5]
