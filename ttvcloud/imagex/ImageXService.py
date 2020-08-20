@@ -104,7 +104,7 @@ class ImageXService(Service):
         return res_json
 
     # 上传本地图片文件
-    def upload_image(self, service_id, file_paths, keys=[], space_name=""):
+    def upload_image(self, service_id, file_paths, keys=[], space_name="", functions=[]):
         img_datas = []
         for p in file_paths:
             if not os.path.isfile(p):
@@ -112,10 +112,10 @@ class ImageXService(Service):
             in_file = open(p, "rb")
             img_datas.append(in_file.read())
             in_file.close()
-        return self.upload_image_data(service_id, img_datas, keys, space_name)
+        return self.upload_image_data(service_id, img_datas, keys, space_name, functions)
 
     # 上传图片二进制数据
-    def upload_image_data(self, service_id, img_datas, keys=[], space_name=""):
+    def upload_image_data(self, service_id, img_datas, keys=[], space_name="", functions=[]):
         apply_upload_request = {
             'ServiceId': service_id,
             'UploadNum': len(img_datas),
@@ -145,7 +145,8 @@ class ImageXService(Service):
             'SpaceName': space_name
         }
         commit_upload_body = {
-            'SessionKey': session_key
+            'SessionKey': session_key,
+            'Functions': functions,
         }
         resp = self.commit_upload(commit_upload_request, json.dumps(commit_upload_body))
         if 'Error' in resp['ResponseMetadata']:
