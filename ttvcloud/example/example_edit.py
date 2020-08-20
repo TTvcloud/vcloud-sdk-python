@@ -9,8 +9,8 @@ if __name__ == '__main__':
     edit_service = EditService()
 
     # call below method if you dont set ak and sk in $HOME/.vcloud/config
-    # vod_service.set_ak('ak')
-    # vod_service.set_sk('sk')
+    # edit_service.set_ak('ak')
+    # edit_service.set_sk('sk')
 
     body = {}
     body["EditParam"] = {
