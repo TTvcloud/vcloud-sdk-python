@@ -187,7 +187,10 @@ class Service(object):
         inner_token = InnerToken()
         inner_token.lt_access_key_id = self.service_info.credentials.ak
         inner_token.access_key_id = sts.access_key_id
-        inner_token.policy_string = json.dumps(policy, cls=ComplexEncoder, sort_keys=True).replace(' ', '')
+        if policy is None:
+            inner_token.policy_string = ''
+        else:
+            inner_token.policy_string = json.dumps(policy, cls=ComplexEncoder, sort_keys=True).replace(' ', '')
         inner_token.signed_secret_access_key = Util.aes_encrypt_cbc_with_base64(sts.secret_access_key, key)
         inner_token.expired_time = expire
 
