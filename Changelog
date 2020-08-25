@@ -1,5 +1,8 @@
 ###Change log
 
+#### 0.0.29
+- 支持生成空PolicyString sts2
+
 #### 0.0.28
 - ImageX上传支持加密场景
 
