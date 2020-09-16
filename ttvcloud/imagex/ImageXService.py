@@ -31,32 +31,32 @@ service_info_map = {
         IMAGEX_HOST_CN,
         {'Accept': 'application/json'},
         Credentials('', '', IMAGEX_SERVICE_NAME, REGION_CN_NORTH1),
-        5000, 5000, "https"),
+        5, 5, "https"),
     REGION_AP_SINGAPORE1: ServiceInfo(
         IMAGEX_HOST_SG,
         {'Accept': 'application/json'},
         Credentials('', '', IMAGEX_SERVICE_NAME, REGION_AP_SINGAPORE1),
-        5000, 5000, "https"),
+        5, 5, "https"),
     REGION_US_EAST1: ServiceInfo(
         IMAGEX_HOST_VA,
         {'Accept': 'application/json'},
         Credentials('', '', IMAGEX_SERVICE_NAME, REGION_US_EAST1),
-        5000, 5000, "https"),
+        5, 5, "https"),
     INNER_REGION_CN_NORTH1: ServiceInfo(
         IMAGEX_INNER_HOST_CN,
         {'Accept': 'application/json'},
         Credentials('', '', IMAGEX_SERVICE_NAME, REGION_CN_NORTH1),
-        5000, 5000),
+        5, 5),
     INNER_REGION_AP_SINGAPORE1: ServiceInfo(
         IMAGEX_INNER_HOST_SG,
         {'Accept': 'application/json'},
         Credentials('', '', IMAGEX_SERVICE_NAME, REGION_AP_SINGAPORE1),
-        5000, 5000),
+        5, 5),
     INNER_REGION_US_EAST1: ServiceInfo(
         IMAGEX_INNER_HOST_VA,
         {'Accept': 'application/json'},
         Credentials('', '', IMAGEX_SERVICE_NAME, REGION_US_EAST1),
-        5000, 5000),
+        5, 5),
 }
 
 api_info = {
