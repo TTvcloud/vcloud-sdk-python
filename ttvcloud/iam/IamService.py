@@ -26,7 +26,7 @@ class IamService(Service):
     @staticmethod
     def get_service_info():
         service_info = ServiceInfo("iam.bytedanceapi.com", {'Accept': 'application/json'},
-                                   Credentials('', '', 'iam', 'cn-north-1'), 5000, 5000)
+                                   Credentials('', '', 'iam', 'cn-north-1'), 5, 5)
         return service_info
 
     @staticmethod
