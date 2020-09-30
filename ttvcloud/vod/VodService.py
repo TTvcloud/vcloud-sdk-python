@@ -36,10 +36,13 @@ class VodService(Service):
         self.lock = threading.Lock()
         super(VodService, self).__init__(self.service_info, self.api_info)
 
+    # TODO 测试完毕修改回来
     @staticmethod
     def get_service_info(region):
         service_info_map = {
-            'cn-north-1': ServiceInfo("vod.bytedanceapi.com", {'Accept': 'application/json'},
+            # 'cn-north-1': ServiceInfo("vod.bytedanceapi.com", {'Accept': 'application/json'},
+            #                           Credentials('', '', 'vod', 'cn-north-1'), 5, 5),
+            'cn-north-1': ServiceInfo("staging-openapi-boe.byted.org", {'Accept': 'application/json'},
                                       Credentials('', '', 'vod', 'cn-north-1'), 5, 5),
             'ap-singapore-1': ServiceInfo("vod.ap-singapore-1.bytedanceapi.com", {'Accept': 'application/json'},
                                           Credentials('', '', 'vod', 'ap-singapore-1'), 5, 5),
@@ -58,6 +61,8 @@ class VodService(Service):
                     "StartTranscode": ApiInfo("POST", "/", {"Action": "StartTranscode", "Version": "2018-01-01"}, {},
                                               {}),
                     "UploadMediaByUrl": ApiInfo("GET", "/", {"Action": "UploadMediaByUrl", "Version": "2018-01-01"}, {},
+                                                {}),
+                    "UploadVideoByUrl": ApiInfo("GET", "/", {"Action": "UploadVideoByUrl", "Version": "2020-08-01"}, {},
                                                 {}),
                     "ApplyUpload": ApiInfo("GET", "/", {"Action": "ApplyUpload", "Version": "2018-01-01"}, {}, {}),
                     "CommitUpload": ApiInfo("POST", "/", {"Action": "CommitUpload", "Version": "2018-01-01"}, {}, {}),
@@ -133,6 +138,13 @@ class VodService(Service):
 
     def upload_media_by_url(self, params):
         res = self.get('UploadMediaByUrl', params)
+        if res == '':
+            raise Exception("empty response")
+        res_json = json.loads(res)
+        return res_json
+
+    def upload_video_by_url(self, params):
+        res = self.get('UploadVideoByUrl', params)
         if res == '':
             raise Exception("empty response")
         res_json = json.loads(res)
