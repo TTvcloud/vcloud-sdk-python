@@ -54,7 +54,7 @@ class VodService(Service):
 
     @staticmethod
     def get_api_info():
-        api_info = {"GetPlayInfo": ApiInfo("GET", "/", {"Action": "GetPlayInfo", "Version": "2019-03-15"}, {}, {}),
+        api_info = {"GetPlayInfo": ApiInfo("GET", "/", {"Action": "GetPlayInfo", "Version": "2020-08-01"}, {}, {}),
                     "StartTranscode": ApiInfo("POST", "/", {"Action": "StartTranscode", "Version": "2018-01-01"}, {},
                                               {}),
                     "UploadMediaByUrl": ApiInfo("GET", "/", {"Action": "UploadMediaByUrl", "Version": "2018-01-01"}, {},
@@ -67,9 +67,9 @@ class VodService(Service):
                     "GetCdnDomainWeights": ApiInfo("GET", "/",
                                                    {"Action": "GetCdnDomainWeights", "Version": "2019-07-01"}, {}, {}),
                     "GetOriginVideoPlayInfo": ApiInfo("GET", "/",
-                                                      {"Action": "GetOriginVideoPlayInfo", "Version": "2018-01-01"}, {},
+                                                      {"Action": "GetOriginVideoPlayInfo", "Version": "2020-08-01"}, {},
                                                       {}),
-                    "RedirectPlay": ApiInfo("GET", "/", {"Action": "RedirectPlay", "Version": "2018-01-01"}, {}, {}),
+                    "RedirectPlay": ApiInfo("GET", "/", {"Action": "RedirectPlay", "Version": "2020-08-01"}, {}, {}),
                     "ModifyVideoInfo": ApiInfo("POST", "/", {"Action": "ModifyVideoInfo", "Version": "2018-01-01"}, {},
                                                {}),
                     }
