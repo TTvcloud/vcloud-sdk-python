@@ -12,11 +12,9 @@ if __name__ == '__main__':
 
     params = dict()
     params['TemplateId'] = 'your template id'
+    params['Vid'] = 'your vid'
+    params['Priority'] = 0
+    params['Input'] = {}
 
-    body = dict()
-    body['Vid'] = 'your vid'
-    body['Priority'] = 0
-    body['Input'] = {}
-
-    resp = vod_service.start_transcode(params, body)
+    resp = vod_service.start_workflow(params)
     print(resp)
