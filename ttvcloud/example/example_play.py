@@ -13,7 +13,7 @@ if __name__ == '__main__':
     vid = 'your vid'
 
     params = dict()
-    params['video_id'] = vid
+    params['Vid'] = vid
     resp = vod_service.get_play_info(params)
     if not ('Error' in resp['ResponseMetadata']):
         print(resp['Result']['Data']['PlayInfoList'][0]['MainPlayUrl'])
