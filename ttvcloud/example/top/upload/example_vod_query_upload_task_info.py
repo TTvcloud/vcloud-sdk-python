@@ -11,16 +11,14 @@ if __name__ == '__main__':
     vod_service.set_ak('AKLTNDQ2YTRlNTBiYTg1NDcyNmE3MDA1MTUzNzc5MWMwNmI')
     vod_service.set_sk('1ZOtyBZ89VERZdOfiUrPf24a3tTjRo1XIJbzccVHMrBvZo1jEn60LjClP2t05qWz')
 
-    space_name = 'james-test'
-    url = 'https://stream7.iqilu.com/10339/upload_transcode/202002/18/20200218114723HDu3hhxqIT.mp4'
+    jobId = '6c9823276b844b619024e3a5367b7d08'
+
+    jobIds = [jobId]
+    comma = ','
+    s = comma.join(jobIds)
 
     params = dict()
-    params['SpaceName'] = space_name
-    url_sets = []
-    url_set = dict()
-    url_set['SourceUrl'] = url
-    url_sets.append(url_set)
-    params['URLSets'] = json.dumps(url_sets)
+    params['JobIds'] = s
 
-    resp = vod_service.upload_video_by_url(params)
+    resp = vod_service.query_upload_task_info(params)
     print(json.dumps(resp))
