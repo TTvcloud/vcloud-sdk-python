@@ -76,21 +76,41 @@ class VodService(Service):
         return api_info
 
     # play
-    def get_play_info(self, params):
+    def get_play_info(self, request):
+        params = {
+            "Vid": request.Vid,
+            "Format": request.Format,
+            "Codec": request.Codec,
+            "Definition": request.Definition,
+            "FileType": request.FileType,
+            "Watermark": request.Watermark,
+            "Base64": request.Base64,
+            "Ssl": request.Ssl
+        }
         res = self.get("GetPlayInfo", params)
         if res == '':
             raise Exception("empty response")
         res_json = json.loads(res)
         return res_json
 
-    def get_origin_video_play_info(self, params):
+    def get_origin_video_play_info(self, request):
+        params = {
+            "Vid": request.Vid,
+            "Base64": request.Base64,
+            "Ssl": request.Ssl
+        }
         res = self.get("GetOriginVideoPlayInfo", params)
         if res == '':
             raise Exception("empty response")
         res_json = json.loads(res)
         return res_json
 
-    def get_redirect_play(self, params):
+    def get_redirect_play(self, request):
+        params = {
+            "Vid": request.Vid,
+            "Definition": request.Definition,
+            "Watermark": request.Watermark
+        }
         uri = self.get_sign_url('RedirectPlay', params)
         proto = 'http'
         host = self.service_info.host
