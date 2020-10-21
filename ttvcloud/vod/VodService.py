@@ -15,6 +15,7 @@ from ttvcloud.base.Service import Service
 from ttvcloud.const.Const import *
 from ttvcloud.Policy import SecurityToken2, InnerToken, ComplexEncoder, Policy, Statement
 from ttvcloud.util.Util import *
+from ttvcloud.vod.Models import *
 
 
 class VodService(Service):
@@ -38,13 +39,17 @@ class VodService(Service):
 
     @staticmethod
     def get_service_info(region):
+        # service_info_map = {
+        #     'cn-north-1': ServiceInfo("vod.bytedanceapi.com", {'Accept': 'application/json'},
+        #                               Credentials('', '', 'vod', 'cn-north-1'), 5, 5),
+        #     'ap-singapore-1': ServiceInfo("vod.ap-singapore-1.bytedanceapi.com", {'Accept': 'application/json'},
+        #                                   Credentials('', '', 'vod', 'ap-singapore-1'), 5, 5),
+        #     'us-east-1': ServiceInfo("vod.us-east-1.bytedanceapi.com", {'Accept': 'application/json'},
+        #                              Credentials('', '', 'vod', 'us-east-1'), 5, 5),
+        # }
         service_info_map = {
-            'cn-north-1': ServiceInfo("vod.bytedanceapi.com", {'Accept': 'application/json'},
+            'cn-north-1': ServiceInfo("staging-openapi-boe.byted.org", {'Accept': 'application/json'},
                                       Credentials('', '', 'vod', 'cn-north-1'), 5, 5),
-            'ap-singapore-1': ServiceInfo("vod.ap-singapore-1.bytedanceapi.com", {'Accept': 'application/json'},
-                                          Credentials('', '', 'vod', 'ap-singapore-1'), 5, 5),
-            'us-east-1': ServiceInfo("vod.us-east-1.bytedanceapi.com", {'Accept': 'application/json'},
-                                     Credentials('', '', 'vod', 'us-east-1'), 5, 5),
         }
         service_info = service_info_map.get(region, None)
         if not service_info:
@@ -77,44 +82,77 @@ class VodService(Service):
 
     # play
     def get_play_info(self, request):
-        params = {
-            "Vid": request.Vid,
-            "Format": request.Format,
-            "Codec": request.Codec,
-            "Definition": request.Definition,
-            "FileType": request.FileType,
-            "Watermark": request.Watermark,
-            "Base64": request.Base64,
-            "Ssl": request.Ssl
-        }
-        res = self.get("GetPlayInfo", params)
-        if res == '':
-            raise Exception("empty response")
-        res_json = json.loads(res)
-        return res_json
+        try:
+            params = dict()
+            if request.Vid is None:
+                raise Exception("InvalidParameter")
+            else:
+                params['Vid'] = request.Vid
+            if request.Format is None or request.Format == '':
+                params['Format'] = 'mp4'
+            else:
+                params['Format'] = request.Format
+            if request.Codec is None or request.Codec == '':
+                params['Codec'] = 'h264'
+            else:
+                params['Codec'] = request.Codec
+            if request.Definition is not None:
+                params['Definition'] = request.Definition
+            if request.FileType is None or request.FileType == '':
+                params['FileType'] = 'video'
+            else:
+                params['FileType'] = request.FileType
+            if request.LogoType is not None:
+                params['LogoType'] = request.LogoType
+            if request.Base64 is None or request.Base64 != '1':
+                params['Base64'] = '0'
+            else:
+                params['Base64'] = '1'
+            if request.Ssl is None or request.Ssl != '1':
+                params['Ssl'] = '0'
+            else:
+                params['Ssl'] = '1'
+            res = self.get("GetPlayInfo", params)
+            if res == '':
+                raise Exception("InternalError")
+            res_json = json.loads(res)
+            if "Error" not in res_json['ResponseMetadata']:
+                model = VodGetPlayInfoResponse()
+                model._deserialize(res_json['Result'])
+                return model
+            else:
+                raise Exception(res_json['ResponseMetadata']['Error']['Code'])
+        except Exception:
+            raise
+
 
     def get_origin_video_play_info(self, request):
-        params = {
-            "Vid": request.Vid,
-            "Base64": request.Base64,
-            "Ssl": request.Ssl
-        }
-        res = self.get("GetOriginVideoPlayInfo", params)
-        if res == '':
-            raise Exception("empty response")
-        res_json = json.loads(res)
-        return res_json
-
-    def get_redirect_play(self, request):
-        params = {
-            "Vid": request.Vid,
-            "Definition": request.Definition,
-            "Watermark": request.Watermark
-        }
-        uri = self.get_sign_url('RedirectPlay', params)
-        proto = 'http'
-        host = self.service_info.host
-        return '{}://{}/?{}'.format(proto, host, uri)
+        try:
+            params = dict()
+            if request.Vid is None:
+                raise Exception("InvalidParameter")
+            else:
+                params['Vid'] = request.Vid
+            if request.Base64 is None or request.Base64 != '1':
+                params['Base64'] = '0'
+            else:
+                params['Base64'] = '1'
+            if request.Ssl is None or request.Ssl != '1':
+                params['Ssl'] = '0'
+            else:
+                params['Ssl'] = '1'
+            res = self.get("GetOriginVideoPlayInfo", params)
+            if res == '':
+                raise Exception("InternalError")
+            res_json = json.loads(res)
+            if "Error" not in res_json['ResponseMetadata']:
+                model = VodGetOriginVideoPlayInfoResponse()
+                model._deserialize(res_json['Result'])
+                return model
+            else:
+                raise Exception(res_json['ResponseMetadata']['Error']['Code'])
+        except Exception:
+            raise
 
     def get_play_auth_token(self, params):
         token = self.get_sign_url('GetPlayInfo', params)
