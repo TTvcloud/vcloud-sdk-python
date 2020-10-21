@@ -59,9 +59,11 @@ class VodService(Service):
 
     @staticmethod
     def get_api_info():
-        api_info = {"GetPlayInfo": ApiInfo("GET", "/", {"Action": "GetPlayInfo", "Version": "2020-08-01"}, {}, {}),
-                    "StartTranscode": ApiInfo("POST", "/", {"Action": "StartTranscode", "Version": "2018-01-01"}, {},
-                                              {}),
+        api_info = {
+                    "GetPlayInfo": ApiInfo("GET", "/", {"Action": "GetPlayInfo", "Version": "2020-08-01"}, {}, 
+                                                {}),
+                    "StartWorkflow": ApiInfo("POST", "/", {"Action": "StartWorkflow", "Version": "2020-08-01"}, {},
+                                                {}),
                     "UploadMediaByUrl": ApiInfo("GET", "/", {"Action": "UploadMediaByUrl", "Version": "2018-01-01"}, {},
                                                 {}),
                     "ApplyUpload": ApiInfo("GET", "/", {"Action": "ApplyUpload", "Version": "2018-01-01"}, {}, {}),
@@ -279,8 +281,8 @@ class VodService(Service):
         return prev & 0xFFFFFFFF
 
     # transcode
-    def start_transcode(self, params, body):
-        res = self.json('StartTranscode', params, json.dumps(body))
+    def start_workflow(self, params):
+        res = self.post('StartWorkflow', {}, params)
         if res == '':
             raise Exception("empty response")
         res_json = json.loads(res)
