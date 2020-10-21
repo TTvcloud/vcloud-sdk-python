@@ -92,7 +92,7 @@ class VodPlayInfo:
         self.LogoType = params.get("LogoType")
         self.PlayAuthID = params.get("PlayAuthID")
         self.PlayAuth = params.get("PlayAuth")
-        self.P2pVerifyURL = params.get("P2pVerifyURL")
+        self.P2pVerifyURL = params.get("P2pVerifyUrl")
         self.PreloadInterval = params.get("PreloadInterval")
         self.PreloadMaxStep = params.get("PreloadMaxStep")
         self.PreloadMinStep = params.get("PreloadMinStep")
@@ -181,7 +181,7 @@ class VodGetPlayInfoResponse:
         :param TotalCount: 列表数量
         :type TotalCount: int
         :param AdaptiveInfo: dash视频播放信息
-        :type AdaptiveInfo: bool
+        :type AdaptiveInfo: VodAdaptiveInfo
         """
         self.Vid = None
         self.Status = None
@@ -201,7 +201,6 @@ class VodGetPlayInfoResponse:
         self.FileType = params.get("FileType")
         self.EnableAdaptive = params.get("EnableAdaptive")
         self.TotalCount = params.get("TotalCount")
-        self.AdaptiveInfo = params.get("AdaptiveInfo")
         if params.get("PlayInfoList") is not None:
             self.PlayInfoList = list()
             for row in params.get("PlayInfoList"):
