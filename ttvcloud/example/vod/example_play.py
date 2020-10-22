@@ -1,8 +1,8 @@
 # coding:utf-8
 from __future__ import print_function
 
+from ttvcloud.models.vod_play_pb2 import *
 from ttvcloud.vod.VodService import VodService
-from ttvcloud.vod.Models import VodGetPlayInfoRequest, VodGetOriginVideoPlayInfoRequest
 
 if __name__ == '__main__':
     vod_service = VodService()
@@ -18,22 +18,25 @@ if __name__ == '__main__':
         raise
     else:
         print(resp)
-        print(resp.PlayInfoList[0].MainPlayUrl)
-        print(resp.PlayInfoList[0].BackupPlayUrl)
-
+        if resp.ResponseMetadata.Error.Code == '':
+            print(resp.Result.PlayInfoList[0].MainPlayUrl)
+        else:
+            print(resp.ResponseMetadata.Error)
     print('*' * 100)
 
     try:
         vid = 'v0c2c369007abu04ru8riko30uo9n73g'
-        req = VodGetOriginVideoPlayInfoRequest()
-        req.Vid = vid
-        req.Ssl = '1'
-        resp = vod_service.get_origin_video_play_info(req)
+        req2 = VodGetOriginalPlayInfoRequest()
+        req2.Vid = vid
+        req2.Ssl = '1'
+        resp2 = vod_service.get_origin_video_play_info(req2)
     except Exception:
         raise
     else:
-        print(resp)
-        print(resp.MainPlayUrl)
-        print(resp.BackupPlayUrl)
+        print(resp2)
+        if resp2.ResponseMetadata.Error.Code == '':
+            print(resp2.Result.MainPlayUrl)
+        else:
+            print(resp2.ResponseMetadata.Error)
 
     print('*' * 100)
