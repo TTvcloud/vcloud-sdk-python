@@ -6,6 +6,7 @@ import json
 import os
 import threading
 import time
+import ttvcloud.models
 from zlib import crc32
 
 from ttvcloud.ApiInfo import ApiInfo
@@ -14,8 +15,10 @@ from ttvcloud.ServiceInfo import ServiceInfo
 from ttvcloud.base.Service import Service
 from ttvcloud.const.Const import *
 from ttvcloud.Policy import SecurityToken2, InnerToken, ComplexEncoder, Policy, Statement
+from ttvcloud.models.vod_play_pb2 import *
+from ttvcloud.models.base_pb2 import *
 from ttvcloud.util.Util import *
-from ttvcloud.vod.Models import *
+from google.protobuf.json_format import Parse
 
 
 class VodService(Service):
@@ -40,7 +43,9 @@ class VodService(Service):
     @staticmethod
     def get_service_info(region):
         service_info_map = {
-            'cn-north-1': ServiceInfo("vod.bytedanceapi.com", {'Accept': 'application/json'},
+            # 'cn-north-1': ServiceInfo("vod.bytedanceapi.com", {'Accept': 'application/json'},
+            #                           Credentials('', '', 'vod', 'cn-north-1'), 5, 5),
+            'cn-north-1': ServiceInfo("staging-openapi-boe.byted.org", {'Accept': 'application/json'},
                                       Credentials('', '', 'vod', 'cn-north-1'), 5, 5),
             'ap-singapore-1': ServiceInfo("vod.ap-singapore-1.bytedanceapi.com", {'Accept': 'application/json'},
                                           Credentials('', '', 'vod', 'ap-singapore-1'), 5, 5),
@@ -79,7 +84,7 @@ class VodService(Service):
         return api_info
 
     # play
-    def get_play_info(self, request):
+    def get_play_info(self, request: VodGetPlayInfoRequest) -> VodGetPlayInfoResponse:
         try:
             params = dict()
             if request.Vid is None:
@@ -113,18 +118,17 @@ class VodService(Service):
             res = self.get("GetPlayInfo", params)
             if res == '':
                 raise Exception("InternalError")
-            res_json = json.loads(res)
-            if "Error" not in res_json['ResponseMetadata']:
-                model = VodGetPlayInfoResponse()
-                model._deserialize(res_json['Result'])
-                return model
-            else:
-                raise Exception(res_json['ResponseMetadata']['Error']['Code'])
+            # if "Error" not in res_json['ResponseMetadata']:
+            #     model = VodGetPlayInfoResponse()
+            #     model._deserialize(res_json['Result'])
+            #     return model
+            # else:
+            #     raise Exception(res_json['ResponseMetadata']['Error']['Code'])
+            return Parse(res, VodGetPlayInfoResponse(), True)
         except Exception:
             raise
 
-
-    def get_origin_video_play_info(self, request):
+    def get_origin_video_play_info(self, request:VodGetOriginalPlayInfoRequest) -> VodGetOriginalPlayInfoResponse:
         try:
             params = dict()
             if request.Vid is None:
@@ -142,13 +146,7 @@ class VodService(Service):
             res = self.get("GetOriginVideoPlayInfo", params)
             if res == '':
                 raise Exception("InternalError")
-            res_json = json.loads(res)
-            if "Error" not in res_json['ResponseMetadata']:
-                model = VodGetOriginVideoPlayInfoResponse()
-                model._deserialize(res_json['Result'])
-                return model
-            else:
-                raise Exception(res_json['ResponseMetadata']['Error']['Code'])
+            return Parse(res, VodGetOriginalPlayInfoResponse(), True)
         except Exception:
             raise
 
