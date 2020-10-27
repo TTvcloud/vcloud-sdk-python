@@ -107,23 +107,17 @@ class VodService(Service):
                 params['FileType'] = request.FileType
             if request.LogoType is not None:
                 params['LogoType'] = request.LogoType
-            if request.Base64 is None or request.Base64 != '1':
-                params['Base64'] = '0'
+            if request.Base64 is None or request.Base64 != 1:
+                params['Base64'] = 0
             else:
-                params['Base64'] = '1'
-            if request.Ssl is None or request.Ssl != '1':
-                params['Ssl'] = '0'
+                params['Base64'] = 1
+            if request.Ssl is None or request.Ssl != 1:
+                params['Ssl'] = 0
             else:
-                params['Ssl'] = '1'
+                params['Ssl'] = 1
             res = self.get("GetPlayInfo", params)
             if res == '':
                 raise Exception("InternalError")
-            # if "Error" not in res_json['ResponseMetadata']:
-            #     model = VodGetPlayInfoResponse()
-            #     model._deserialize(res_json['Result'])
-            #     return model
-            # else:
-            #     raise Exception(res_json['ResponseMetadata']['Error']['Code'])
             return Parse(res, VodGetPlayInfoResponse(), True)
         except Exception:
             raise
@@ -135,14 +129,14 @@ class VodService(Service):
                 raise Exception("InvalidParameter")
             else:
                 params['Vid'] = request.Vid
-            if request.Base64 is None or request.Base64 != '1':
-                params['Base64'] = '0'
+            if request.Base64 is None or request.Base64 != 1:
+                params['Base64'] = 0
             else:
-                params['Base64'] = '1'
-            if request.Ssl is None or request.Ssl != '1':
-                params['Ssl'] = '0'
+                params['Base64'] = 1
+            if request.Ssl is None or request.Ssl != 1:
+                params['Ssl'] = 0
             else:
-                params['Ssl'] = '1'
+                params['Ssl'] = 1
             res = self.get("GetOriginVideoPlayInfo", params)
             if res == '':
                 raise Exception("InternalError")
