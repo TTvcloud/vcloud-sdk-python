@@ -28,7 +28,7 @@ if __name__ == '__main__':
         vid = 'v0c2c369007abu04ru8riko30uo9n73g'
         req2 = VodGetOriginalPlayInfoRequest()
         req2.Vid = vid
-        req2.Ssl = '1'
+        req2.Ssl = 1
         resp2 = vod_service.get_origin_video_play_info(req2)
     except Exception:
         raise

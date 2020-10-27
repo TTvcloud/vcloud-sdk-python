@@ -17,9 +17,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='base.proto',
   package='Vcloud.Models.Base',
   syntax='proto3',
-  serialized_options=b'\n\035com.bytedanceapi.model.commonB\004BaseP\001Z\010.;models\240\001\001\330\001\001',
+  serialized_options=b'\n\035com.bytedanceapi.model.commonB\004BaseP\001Z\010.;models\240\001\001\330\001\001\302\002\000\312\002\022Vcloud\\Models\\Base\342\002\031Vcloud\\Models\\GPBMetadata',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\nbase.proto\x12\x12Vcloud.Models.Base\"\x99\x01\n\x10ResponseMetadata\x12\x11\n\tRequestId\x18\x01 \x01(\t\x12\x0e\n\x06\x41\x63tion\x18\x02 \x01(\t\x12\x0f\n\x07Version\x18\x03 \x01(\t\x12\x0f\n\x07Service\x18\x04 \x01(\t\x12\x0e\n\x06Region\x18\x05 \x01(\t\x12\x30\n\x05\x45rror\x18\x06 \x01(\x0b\x32!.Vcloud.Models.Base.ResponseError\".\n\rResponseError\x12\x0c\n\x04\x43ode\x18\x01 \x01(\t\x12\x0f\n\x07Message\x18\x02 \x01(\tB7\n\x1d\x63om.bytedanceapi.model.commonB\x04\x42\x61seP\x01Z\x08.;models\xa0\x01\x01\xd8\x01\x01\x62\x06proto3'
+  serialized_pb=b'\n\nbase.proto\x12\x12Vcloud.Models.Base\"\x99\x01\n\x10ResponseMetadata\x12\x11\n\tRequestId\x18\x01 \x01(\t\x12\x0e\n\x06\x41\x63tion\x18\x02 \x01(\t\x12\x0f\n\x07Version\x18\x03 \x01(\t\x12\x0f\n\x07Service\x18\x04 \x01(\t\x12\x0e\n\x06Region\x18\x05 \x01(\t\x12\x30\n\x05\x45rror\x18\x06 \x01(\x0b\x32!.Vcloud.Models.Base.ResponseError\".\n\rResponseError\x12\x0c\n\x04\x43ode\x18\x01 \x01(\t\x12\x0f\n\x07Message\x18\x02 \x01(\tBk\n\x1d\x63om.bytedanceapi.model.commonB\x04\x42\x61seP\x01Z\x08.;models\xa0\x01\x01\xd8\x01\x01\xc2\x02\x00\xca\x02\x12Vcloud\\Models\\Base\xe2\x02\x19Vcloud\\Models\\GPBMetadatab\x06proto3'
 )
 
 
