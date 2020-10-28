@@ -12,7 +12,7 @@ _sym_db = _symbol_database.Default()
 
 
 import ttvcloud.models.base_pb2 as base__pb2
-from ttvcloud.models.google.api import annotations_pb2 as google_dot_api_dot_annotations__pb2
+from google.api import annotations_pb2 as google_dot_api_dot_annotations__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
