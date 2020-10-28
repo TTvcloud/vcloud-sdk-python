@@ -2,16 +2,18 @@
 from __future__ import print_function
 
 from ttvcloud.vod.VodService import VodService
+from ttvcloud.vod.top.model.request.UrlUploadQueryRequest import UrlUploadQueryRequest
+from ttvcloud.vod.top.model.response.QueryDataResponse import QueryDataResponse
 import json
 
 if __name__ == '__main__':
     vod_service = VodService()
 
     # call below method if you dont set ak and sk in $HOME/.vcloud/config
-    vod_service.set_ak('AKLTNDQ2YTRlNTBiYTg1NDcyNmE3MDA1MTUzNzc5MWMwNmI')
-    vod_service.set_sk('1ZOtyBZ89VERZdOfiUrPf24a3tTjRo1XIJbzccVHMrBvZo1jEn60LjClP2t05qWz')
+    vod_service.set_ak('your ak')
+    vod_service.set_sk('your sk')
 
-    jobId = '6c9823276b844b619024e3a5367b7d08'
+    jobId = 'url jobId'
 
     jobIds = [jobId]
     comma = ','
@@ -20,5 +22,10 @@ if __name__ == '__main__':
     params = dict()
     params['JobIds'] = s
 
-    resp = vod_service.query_upload_task_info(params)
+    url_upload_query_request = UrlUploadQueryRequest(jobIds)
+
+    resp = vod_service.query_upload_task_info(url_upload_query_request)
     print(json.dumps(resp))
+
+    url_upload_query_response = QueryDataResponse(resp)
+    print(json.dumps(url_upload_query_response, default=lambda obj: obj.__dict__))

@@ -144,6 +144,7 @@ class VodService(Service):
         res_json = json.loads(res)
         return res_json
 
+    # TODO 注释，参照标准库
     def commit_upload(self, params, body):
         res = self.json('CommitUpload', params, body)
         if res == '':
@@ -165,19 +166,20 @@ class VodService(Service):
         res_json = json.loads(res)
         return res_json
 
+    def upload_video_by_url_tob(self, url_upload_request):
+        return self.upload_video_by_url(url_upload_request.to_dict())
+
     def upload_video_by_url(self, params):
         res = self.get('UploadVideoByUrl', params)
         if res == '':
             raise Exception("empty response")
-        res_json = json.loads(res)
-        return res_json
+        return json.loads(res)
 
-    def query_upload_task_info(self, params):
-        res = self.get('QueryUploadTaskInfo', params)
+    def query_upload_task_info(self, url_upload_query_request):
+        res = self.get('QueryUploadTaskInfo', url_upload_query_request.to_dict())
         if res == '':
             raise Exception("empty response")
-        res_json = json.loads(res)
-        return res_json
+        return json.loads(res)
 
     def upload(self, space_name, file_path, file_type):
         if not os.path.isfile(file_path):
@@ -225,6 +227,7 @@ class VodService(Service):
         if 'Error' in resp['ResponseMetadata']:
             raise Exception(resp['ResponseMetadata']['Error']['Message'])
 
+        # TODO 提出来， storeinfos 长度要判断
         oid = resp['Result']['Data']['UploadAddress']['StoreInfos'][0]['StoreUri']
         session_key = resp['Result']['Data']['UploadAddress']['SessionKey']
         auth = resp['Result']['Data']['UploadAddress']['StoreInfos'][0]['Auth']
@@ -267,20 +270,20 @@ class VodService(Service):
             raise Exception(resp['ResponseMetadata']['Error']['Message'])
         return resp['Result']
 
-    def upload_video_tob(self, space_name, file_path, funtions_list, callback_args=''):
-        oid, session_key, avg_speed = self.upload_tob(space_name, file_path)
+    def upload_video_tob(self, upload_video_reqeust):
+        oid, session_key, avg_speed = self.upload_tob(upload_video_reqeust.space_name, upload_video_reqeust.file_path)
 
         form = dict()
         form['SessionKey'] = session_key
-        form['SpaceName'] = space_name
-        funcs_str = json.dumps(funtions_list)
+        form['SpaceName'] = upload_video_reqeust.space_name
+        funcs_str = json.dumps(upload_video_reqeust.function_list)
         form['Functions'] = funcs_str
-        form['CallbackArgs'] = callback_args
+        form['CallbackArgs'] = upload_video_reqeust.callback_args
 
         resp = self.commit_upload_info({}, form)
         if 'Error' in resp['ResponseMetadata']:
             raise Exception(resp['ResponseMetadata']['Error']['Message'])
-        return resp['Result']
+        return resp
 
     def upload_poster(self, vid, space_name, file_path, file_type):
         oid, session_key, avg_speed = self.upload(space_name, file_path, file_type)
