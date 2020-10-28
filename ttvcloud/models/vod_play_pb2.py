@@ -11,17 +11,17 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
-import ttvcloud.models.base_pb2 as base__pb2
-from ttvcloud.models.google.api import annotations_pb2 as google_dot_api_dot_annotations__pb2
+from . import base_pb2 as base__pb2
+from google.api import annotations_pb2 as google_dot_api_dot_annotations__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='vod_play.proto',
-  package='Vcloud.Models.Vod',
+  package='ttvcloud.models',
   syntax='proto3',
-  serialized_options=b'\n\035com.bytedanceapi.model.commonB\007VodPlayP\001Z\010.;models\240\001\001\330\001\001\302\002\000\312\002\021Vcloud\\Models\\Vod\342\002\031Vcloud\\Models\\GPBMetadata',
+  serialized_options=b'\n\035com.bytedanceapi.model.commonB\007VodPlayP\001Z\010.;models\240\001\001\330\001\001\370\001\001\302\002\000\312\002\021Vcloud\\Models\\Vod\342\002\031Vcloud\\Models\\GPBMetadata',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0evod_play.proto\x12\x11Vcloud.Models.Vod\x1a\nbase.proto\x1a\x1cgoogle/api/annotations.proto\"\x98\x01\n\x15VodGetPlayInfoRequest\x12\x0b\n\x03Vid\x18\x01 \x01(\t\x12\x0e\n\x06\x46ormat\x18\x02 \x01(\t\x12\r\n\x05\x43odec\x18\x03 \x01(\t\x12\x12\n\nDefinition\x18\x04 \x01(\t\x12\x10\n\x08\x46ileType\x18\x05 \x01(\t\x12\x10\n\x08LogoType\x18\x06 \x01(\t\x12\x0e\n\x06\x42\x61se64\x18\x07 \x01(\x03\x12\x0b\n\x03Ssl\x18\x08 \x01(\x03\"\x91\x01\n\x16VodGetPlayInfoResponse\x12>\n\x10ResponseMetadata\x18\x01 \x01(\x0b\x32$.Vcloud.Models.Base.ResponseMetadata\x12\x37\n\x06Result\x18\x02 \x01(\x0b\x32\'.Vcloud.Models.Vod.VodGetPlayInfoResult\"\x86\x02\n\x14VodGetPlayInfoResult\x12\x0b\n\x03Vid\x18\x01 \x01(\t\x12\x0e\n\x06Status\x18\x02 \x01(\x03\x12\x11\n\tPosterUrl\x18\x03 \x01(\t\x12\x10\n\x08\x44uration\x18\x04 \x01(\x02\x12\x10\n\x08\x46ileType\x18\x05 \x01(\t\x12\x16\n\x0e\x45nableAdaptive\x18\x06 \x01(\x08\x12\x12\n\nTotalCount\x18\x07 \x01(\x03\x12\x38\n\x0c\x41\x64\x61ptiveInfo\x18\x08 \x01(\x0b\x32\".Vcloud.Models.Vod.VodAdaptiveInfo\x12\x34\n\x0cPlayInfoList\x18\t \x03(\x0b\x32\x1e.Vcloud.Models.Vod.VodPlayInfo\"S\n\x0fVodAdaptiveInfo\x12\x13\n\x0bMainPlayUrl\x18\x01 \x01(\t\x12\x15\n\rBackupPlayUrl\x18\x02 \x01(\t\x12\x14\n\x0c\x41\x64\x61ptiveType\x18\x03 \x01(\t\"\xd0\x03\n\x0bVodPlayInfo\x12\x0e\n\x06\x46ileId\x18\x01 \x01(\t\x12\x0b\n\x03Md5\x18\x02 \x01(\t\x12\x10\n\x08\x46ileType\x18\x03 \x01(\t\x12\x0e\n\x06\x46ormat\x18\x04 \x01(\t\x12\r\n\x05\x43odec\x18\x05 \x01(\t\x12\x12\n\nDefinition\x18\x06 \x01(\t\x12\x13\n\x0bMainPlayUrl\x18\x07 \x01(\t\x12\x15\n\rBackupPlayUrl\x18\x08 \x01(\t\x12\x0f\n\x07\x42itrate\x18\t \x01(\x02\x12\r\n\x05Width\x18\n \x01(\x03\x12\x0e\n\x06Height\x18\x0b \x01(\x03\x12\x0c\n\x04Size\x18\x0c \x01(\x03\x12\x11\n\tCheckInfo\x18\r \x01(\t\x12\x12\n\nIndexRange\x18\x0e \x01(\t\x12\x11\n\tInitRange\x18\x0f \x01(\t\x12\x13\n\x0bPreloadSize\x18\x10 \x01(\x03\x12\x16\n\x0ePreloadMinStep\x18\x11 \x01(\x03\x12\x16\n\x0ePreloadMaxStep\x18\x12 \x01(\x03\x12\x17\n\x0fPreloadInterval\x18\x13 \x01(\x03\x12\x14\n\x0cP2pVerifyUrl\x18\x14 \x01(\t\x12\x10\n\x08PlayAuth\x18\x15 \x01(\t\x12\x12\n\nPlayAuthId\x18\x16 \x01(\t\x12\x10\n\x08LogoType\x18\x17 \x01(\t\x12\x0f\n\x07Quality\x18\x18 \x01(\t\"I\n\x1dVodGetOriginalPlayInfoRequest\x12\x0b\n\x03Vid\x18\x01 \x01(\t\x12\x0e\n\x06\x42\x61se64\x18\x02 \x01(\x03\x12\x0b\n\x03Ssl\x18\x03 \x01(\x03\"\xa1\x01\n\x1eVodGetOriginalPlayInfoResponse\x12>\n\x10ResponseMetadata\x18\x01 \x01(\x0b\x32$.Vcloud.Models.Base.ResponseMetadata\x12?\n\x06Result\x18\x02 \x01(\x0b\x32/.Vcloud.Models.Vod.VodGetOriginalPlayInfoResult\"\xd8\x01\n\x1cVodGetOriginalPlayInfoResult\x12\x10\n\x08\x46ileType\x18\x01 \x01(\t\x12\x10\n\x08\x44uration\x18\x02 \x01(\x02\x12\x0c\n\x04Size\x18\x03 \x01(\x03\x12\x0e\n\x06Height\x18\x04 \x01(\x03\x12\r\n\x05Width\x18\x05 \x01(\x03\x12\x0e\n\x06\x46ormat\x18\x06 \x01(\t\x12\r\n\x05\x43odec\x18\x07 \x01(\t\x12\x0f\n\x07\x42itrate\x18\x08 \x01(\x02\x12\x0b\n\x03Md5\x18\t \x01(\t\x12\x13\n\x0bMainPlayUrl\x18\n \x01(\t\x12\x15\n\rBackupPlayUrl\x18\x0b \x01(\t2\x9e\x04\n\x0eVodPlayService\x12\xee\x01\n\x0bGetPlayInfo\x12(.Vcloud.Models.Vod.VodGetPlayInfoRequest\x1a).Vcloud.Models.Vod.VodGetPlayInfoResponse\"\x89\x01\x82\xd3\xe4\x93\x02\x82\x01\x12\'/?Action=GetPlayInfo&Version=2020-08-01:\x15VodGetPlayInfoRequestZ@\"\'/?Action=GetPlayInfo&Version=2020-08-01:\x15VodGetPlayInfoRequest\x12\x9a\x02\n\x13GetOriginalPlayInfo\x12\x30.Vcloud.Models.Vod.VodGetOriginalPlayInfoRequest\x1a\x31.Vcloud.Models.Vod.VodGetOriginalPlayInfoResponse\"\x9d\x01\x82\xd3\xe4\x93\x02\x96\x01\x12)/video/atlas/top/vod/v2/GetOriginPlayInfo:\x1dVodGetOriginalPlayInfoRequestZJ\")/video/atlas/top/vod/v2/GetOriginPlayInfo:\x1dVodGetOriginalPlayInfoRequestBm\n\x1d\x63om.bytedanceapi.model.commonB\x07VodPlayP\x01Z\x08.;models\xa0\x01\x01\xd8\x01\x01\xc2\x02\x00\xca\x02\x11Vcloud\\Models\\Vod\xe2\x02\x19Vcloud\\Models\\GPBMetadatab\x06proto3'
+  serialized_pb=b'\n\x0evod_play.proto\x12\x0fttvcloud.models\x1a\nbase.proto\x1a\x1cgoogle/api/annotations.proto\"\x98\x01\n\x15VodGetPlayInfoRequest\x12\x0b\n\x03Vid\x18\x01 \x01(\t\x12\x0e\n\x06\x46ormat\x18\x02 \x01(\t\x12\r\n\x05\x43odec\x18\x03 \x01(\t\x12\x12\n\nDefinition\x18\x04 \x01(\t\x12\x10\n\x08\x46ileType\x18\x05 \x01(\t\x12\x10\n\x08LogoType\x18\x06 \x01(\t\x12\x0e\n\x06\x42\x61se64\x18\x07 \x01(\t\x12\x0b\n\x03Ssl\x18\x08 \x01(\t\"\x8f\x01\n\x16VodGetPlayInfoResponse\x12>\n\x10ResponseMetadata\x18\x01 \x01(\x0b\x32$.Vcloud.Models.Base.ResponseMetadata\x12\x35\n\x06Result\x18\x02 \x01(\x0b\x32%.ttvcloud.models.VodGetPlayInfoResult\"\x82\x02\n\x14VodGetPlayInfoResult\x12\x0b\n\x03Vid\x18\x01 \x01(\t\x12\x0e\n\x06Status\x18\x02 \x01(\x03\x12\x11\n\tPosterUrl\x18\x03 \x01(\t\x12\x10\n\x08\x44uration\x18\x04 \x01(\x02\x12\x10\n\x08\x46ileType\x18\x05 \x01(\t\x12\x16\n\x0e\x45nableAdaptive\x18\x06 \x01(\x08\x12\x12\n\nTotalCount\x18\x07 \x01(\x03\x12\x36\n\x0c\x41\x64\x61ptiveInfo\x18\x08 \x01(\x0b\x32 .ttvcloud.models.VodAdaptiveInfo\x12\x32\n\x0cPlayInfoList\x18\t \x03(\x0b\x32\x1c.ttvcloud.models.VodPlayInfo\"S\n\x0fVodAdaptiveInfo\x12\x13\n\x0bMainPlayUrl\x18\x01 \x01(\t\x12\x15\n\rBackupPlayUrl\x18\x02 \x01(\t\x12\x14\n\x0c\x41\x64\x61ptiveType\x18\x03 \x01(\t\"\xd0\x03\n\x0bVodPlayInfo\x12\x0e\n\x06\x46ileId\x18\x01 \x01(\t\x12\x0b\n\x03Md5\x18\x02 \x01(\t\x12\x10\n\x08\x46ileType\x18\x03 \x01(\t\x12\x0e\n\x06\x46ormat\x18\x04 \x01(\t\x12\r\n\x05\x43odec\x18\x05 \x01(\t\x12\x12\n\nDefinition\x18\x06 \x01(\t\x12\x13\n\x0bMainPlayUrl\x18\x07 \x01(\t\x12\x15\n\rBackupPlayUrl\x18\x08 \x01(\t\x12\x0f\n\x07\x42itrate\x18\t \x01(\x02\x12\r\n\x05Width\x18\n \x01(\x03\x12\x0e\n\x06Height\x18\x0b \x01(\x03\x12\x0c\n\x04Size\x18\x0c \x01(\x03\x12\x11\n\tCheckInfo\x18\r \x01(\t\x12\x12\n\nIndexRange\x18\x0e \x01(\t\x12\x11\n\tInitRange\x18\x0f \x01(\t\x12\x13\n\x0bPreloadSize\x18\x10 \x01(\x03\x12\x16\n\x0ePreloadMinStep\x18\x11 \x01(\x03\x12\x16\n\x0ePreloadMaxStep\x18\x12 \x01(\x03\x12\x17\n\x0fPreloadInterval\x18\x13 \x01(\x03\x12\x14\n\x0cP2pVerifyUrl\x18\x14 \x01(\t\x12\x10\n\x08PlayAuth\x18\x15 \x01(\t\x12\x12\n\nPlayAuthId\x18\x16 \x01(\t\x12\x10\n\x08LogoType\x18\x17 \x01(\t\x12\x0f\n\x07Quality\x18\x18 \x01(\t\"I\n\x1dVodGetOriginalPlayInfoRequest\x12\x0b\n\x03Vid\x18\x01 \x01(\t\x12\x0e\n\x06\x42\x61se64\x18\x02 \x01(\t\x12\x0b\n\x03Ssl\x18\x03 \x01(\t\"\x9f\x01\n\x1eVodGetOriginalPlayInfoResponse\x12>\n\x10ResponseMetadata\x18\x01 \x01(\x0b\x32$.Vcloud.Models.Base.ResponseMetadata\x12=\n\x06Result\x18\x02 \x01(\x0b\x32-.ttvcloud.models.VodGetOriginalPlayInfoResult\"\xd8\x01\n\x1cVodGetOriginalPlayInfoResult\x12\x10\n\x08\x46ileType\x18\x01 \x01(\t\x12\x10\n\x08\x44uration\x18\x02 \x01(\x02\x12\x0c\n\x04Size\x18\x03 \x01(\x03\x12\x0e\n\x06Height\x18\x04 \x01(\x03\x12\r\n\x05Width\x18\x05 \x01(\x03\x12\x0e\n\x06\x46ormat\x18\x06 \x01(\t\x12\r\n\x05\x43odec\x18\x07 \x01(\t\x12\x0f\n\x07\x42itrate\x18\x08 \x01(\x02\x12\x0b\n\x03Md5\x18\t \x01(\t\x12\x13\n\x0bMainPlayUrl\x18\n \x01(\t\x12\x15\n\rBackupPlayUrl\x18\x0b \x01(\t2\x96\x04\n\x0eVodPlayService\x12\xea\x01\n\x0bGetPlayInfo\x12&.ttvcloud.models.VodGetPlayInfoRequest\x1a\'.ttvcloud.models.VodGetPlayInfoResponse\"\x89\x01\x82\xd3\xe4\x93\x02\x82\x01\x12\'/?Action=GetPlayInfo&Version=2020-08-01:\x15VodGetPlayInfoRequestZ@\"\'/?Action=GetPlayInfo&Version=2020-08-01:\x15VodGetPlayInfoRequest\x12\x96\x02\n\x13GetOriginalPlayInfo\x12..ttvcloud.models.VodGetOriginalPlayInfoRequest\x1a/.ttvcloud.models.VodGetOriginalPlayInfoResponse\"\x9d\x01\x82\xd3\xe4\x93\x02\x96\x01\x12)/video/atlas/top/vod/v2/GetOriginPlayInfo:\x1dVodGetOriginalPlayInfoRequestZJ\")/video/atlas/top/vod/v2/GetOriginPlayInfo:\x1dVodGetOriginalPlayInfoRequestBp\n\x1d\x63om.bytedanceapi.model.commonB\x07VodPlayP\x01Z\x08.;models\xa0\x01\x01\xd8\x01\x01\xf8\x01\x01\xc2\x02\x00\xca\x02\x11Vcloud\\Models\\Vod\xe2\x02\x19Vcloud\\Models\\GPBMetadatab\x06proto3'
   ,
   dependencies=[base__pb2.DESCRIPTOR,google_dot_api_dot_annotations__pb2.DESCRIPTOR,])
 
@@ -30,65 +30,65 @@ DESCRIPTOR = _descriptor.FileDescriptor(
 
 _VODGETPLAYINFOREQUEST = _descriptor.Descriptor(
   name='VodGetPlayInfoRequest',
-  full_name='Vcloud.Models.Vod.VodGetPlayInfoRequest',
+  full_name='ttvcloud.models.VodGetPlayInfoRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='Vid', full_name='Vcloud.Models.Vod.VodGetPlayInfoRequest.Vid', index=0,
+      name='Vid', full_name='ttvcloud.models.VodGetPlayInfoRequest.Vid', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='Format', full_name='Vcloud.Models.Vod.VodGetPlayInfoRequest.Format', index=1,
+      name='Format', full_name='ttvcloud.models.VodGetPlayInfoRequest.Format', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='Codec', full_name='Vcloud.Models.Vod.VodGetPlayInfoRequest.Codec', index=2,
+      name='Codec', full_name='ttvcloud.models.VodGetPlayInfoRequest.Codec', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='Definition', full_name='Vcloud.Models.Vod.VodGetPlayInfoRequest.Definition', index=3,
+      name='Definition', full_name='ttvcloud.models.VodGetPlayInfoRequest.Definition', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='FileType', full_name='Vcloud.Models.Vod.VodGetPlayInfoRequest.FileType', index=4,
+      name='FileType', full_name='ttvcloud.models.VodGetPlayInfoRequest.FileType', index=4,
       number=5, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='LogoType', full_name='Vcloud.Models.Vod.VodGetPlayInfoRequest.LogoType', index=5,
+      name='LogoType', full_name='ttvcloud.models.VodGetPlayInfoRequest.LogoType', index=5,
       number=6, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='Base64', full_name='Vcloud.Models.Vod.VodGetPlayInfoRequest.Base64', index=6,
-      number=7, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
+      name='Base64', full_name='ttvcloud.models.VodGetPlayInfoRequest.Base64', index=6,
+      number=7, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='Ssl', full_name='Vcloud.Models.Vod.VodGetPlayInfoRequest.Ssl', index=7,
-      number=8, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
+      name='Ssl', full_name='ttvcloud.models.VodGetPlayInfoRequest.Ssl', index=7,
+      number=8, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -104,28 +104,28 @@ _VODGETPLAYINFOREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=80,
-  serialized_end=232,
+  serialized_start=78,
+  serialized_end=230,
 )
 
 
 _VODGETPLAYINFORESPONSE = _descriptor.Descriptor(
   name='VodGetPlayInfoResponse',
-  full_name='Vcloud.Models.Vod.VodGetPlayInfoResponse',
+  full_name='ttvcloud.models.VodGetPlayInfoResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='ResponseMetadata', full_name='Vcloud.Models.Vod.VodGetPlayInfoResponse.ResponseMetadata', index=0,
+      name='ResponseMetadata', full_name='ttvcloud.models.VodGetPlayInfoResponse.ResponseMetadata', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='Result', full_name='Vcloud.Models.Vod.VodGetPlayInfoResponse.Result', index=1,
+      name='Result', full_name='ttvcloud.models.VodGetPlayInfoResponse.Result', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -143,77 +143,77 @@ _VODGETPLAYINFORESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=235,
-  serialized_end=380,
+  serialized_start=233,
+  serialized_end=376,
 )
 
 
 _VODGETPLAYINFORESULT = _descriptor.Descriptor(
   name='VodGetPlayInfoResult',
-  full_name='Vcloud.Models.Vod.VodGetPlayInfoResult',
+  full_name='ttvcloud.models.VodGetPlayInfoResult',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='Vid', full_name='Vcloud.Models.Vod.VodGetPlayInfoResult.Vid', index=0,
+      name='Vid', full_name='ttvcloud.models.VodGetPlayInfoResult.Vid', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='Status', full_name='Vcloud.Models.Vod.VodGetPlayInfoResult.Status', index=1,
+      name='Status', full_name='ttvcloud.models.VodGetPlayInfoResult.Status', index=1,
       number=2, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='PosterUrl', full_name='Vcloud.Models.Vod.VodGetPlayInfoResult.PosterUrl', index=2,
+      name='PosterUrl', full_name='ttvcloud.models.VodGetPlayInfoResult.PosterUrl', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='Duration', full_name='Vcloud.Models.Vod.VodGetPlayInfoResult.Duration', index=3,
+      name='Duration', full_name='ttvcloud.models.VodGetPlayInfoResult.Duration', index=3,
       number=4, type=2, cpp_type=6, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='FileType', full_name='Vcloud.Models.Vod.VodGetPlayInfoResult.FileType', index=4,
+      name='FileType', full_name='ttvcloud.models.VodGetPlayInfoResult.FileType', index=4,
       number=5, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='EnableAdaptive', full_name='Vcloud.Models.Vod.VodGetPlayInfoResult.EnableAdaptive', index=5,
+      name='EnableAdaptive', full_name='ttvcloud.models.VodGetPlayInfoResult.EnableAdaptive', index=5,
       number=6, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='TotalCount', full_name='Vcloud.Models.Vod.VodGetPlayInfoResult.TotalCount', index=6,
+      name='TotalCount', full_name='ttvcloud.models.VodGetPlayInfoResult.TotalCount', index=6,
       number=7, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='AdaptiveInfo', full_name='Vcloud.Models.Vod.VodGetPlayInfoResult.AdaptiveInfo', index=7,
+      name='AdaptiveInfo', full_name='ttvcloud.models.VodGetPlayInfoResult.AdaptiveInfo', index=7,
       number=8, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='PlayInfoList', full_name='Vcloud.Models.Vod.VodGetPlayInfoResult.PlayInfoList', index=8,
+      name='PlayInfoList', full_name='ttvcloud.models.VodGetPlayInfoResult.PlayInfoList', index=8,
       number=9, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -231,35 +231,35 @@ _VODGETPLAYINFORESULT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=383,
-  serialized_end=645,
+  serialized_start=379,
+  serialized_end=637,
 )
 
 
 _VODADAPTIVEINFO = _descriptor.Descriptor(
   name='VodAdaptiveInfo',
-  full_name='Vcloud.Models.Vod.VodAdaptiveInfo',
+  full_name='ttvcloud.models.VodAdaptiveInfo',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='MainPlayUrl', full_name='Vcloud.Models.Vod.VodAdaptiveInfo.MainPlayUrl', index=0,
+      name='MainPlayUrl', full_name='ttvcloud.models.VodAdaptiveInfo.MainPlayUrl', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='BackupPlayUrl', full_name='Vcloud.Models.Vod.VodAdaptiveInfo.BackupPlayUrl', index=1,
+      name='BackupPlayUrl', full_name='ttvcloud.models.VodAdaptiveInfo.BackupPlayUrl', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='AdaptiveType', full_name='Vcloud.Models.Vod.VodAdaptiveInfo.AdaptiveType', index=2,
+      name='AdaptiveType', full_name='ttvcloud.models.VodAdaptiveInfo.AdaptiveType', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -277,182 +277,182 @@ _VODADAPTIVEINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=647,
-  serialized_end=730,
+  serialized_start=639,
+  serialized_end=722,
 )
 
 
 _VODPLAYINFO = _descriptor.Descriptor(
   name='VodPlayInfo',
-  full_name='Vcloud.Models.Vod.VodPlayInfo',
+  full_name='ttvcloud.models.VodPlayInfo',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='FileId', full_name='Vcloud.Models.Vod.VodPlayInfo.FileId', index=0,
+      name='FileId', full_name='ttvcloud.models.VodPlayInfo.FileId', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='Md5', full_name='Vcloud.Models.Vod.VodPlayInfo.Md5', index=1,
+      name='Md5', full_name='ttvcloud.models.VodPlayInfo.Md5', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='FileType', full_name='Vcloud.Models.Vod.VodPlayInfo.FileType', index=2,
+      name='FileType', full_name='ttvcloud.models.VodPlayInfo.FileType', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='Format', full_name='Vcloud.Models.Vod.VodPlayInfo.Format', index=3,
+      name='Format', full_name='ttvcloud.models.VodPlayInfo.Format', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='Codec', full_name='Vcloud.Models.Vod.VodPlayInfo.Codec', index=4,
+      name='Codec', full_name='ttvcloud.models.VodPlayInfo.Codec', index=4,
       number=5, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='Definition', full_name='Vcloud.Models.Vod.VodPlayInfo.Definition', index=5,
+      name='Definition', full_name='ttvcloud.models.VodPlayInfo.Definition', index=5,
       number=6, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='MainPlayUrl', full_name='Vcloud.Models.Vod.VodPlayInfo.MainPlayUrl', index=6,
+      name='MainPlayUrl', full_name='ttvcloud.models.VodPlayInfo.MainPlayUrl', index=6,
       number=7, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='BackupPlayUrl', full_name='Vcloud.Models.Vod.VodPlayInfo.BackupPlayUrl', index=7,
+      name='BackupPlayUrl', full_name='ttvcloud.models.VodPlayInfo.BackupPlayUrl', index=7,
       number=8, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='Bitrate', full_name='Vcloud.Models.Vod.VodPlayInfo.Bitrate', index=8,
+      name='Bitrate', full_name='ttvcloud.models.VodPlayInfo.Bitrate', index=8,
       number=9, type=2, cpp_type=6, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='Width', full_name='Vcloud.Models.Vod.VodPlayInfo.Width', index=9,
+      name='Width', full_name='ttvcloud.models.VodPlayInfo.Width', index=9,
       number=10, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='Height', full_name='Vcloud.Models.Vod.VodPlayInfo.Height', index=10,
+      name='Height', full_name='ttvcloud.models.VodPlayInfo.Height', index=10,
       number=11, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='Size', full_name='Vcloud.Models.Vod.VodPlayInfo.Size', index=11,
+      name='Size', full_name='ttvcloud.models.VodPlayInfo.Size', index=11,
       number=12, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='CheckInfo', full_name='Vcloud.Models.Vod.VodPlayInfo.CheckInfo', index=12,
+      name='CheckInfo', full_name='ttvcloud.models.VodPlayInfo.CheckInfo', index=12,
       number=13, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='IndexRange', full_name='Vcloud.Models.Vod.VodPlayInfo.IndexRange', index=13,
+      name='IndexRange', full_name='ttvcloud.models.VodPlayInfo.IndexRange', index=13,
       number=14, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='InitRange', full_name='Vcloud.Models.Vod.VodPlayInfo.InitRange', index=14,
+      name='InitRange', full_name='ttvcloud.models.VodPlayInfo.InitRange', index=14,
       number=15, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='PreloadSize', full_name='Vcloud.Models.Vod.VodPlayInfo.PreloadSize', index=15,
+      name='PreloadSize', full_name='ttvcloud.models.VodPlayInfo.PreloadSize', index=15,
       number=16, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='PreloadMinStep', full_name='Vcloud.Models.Vod.VodPlayInfo.PreloadMinStep', index=16,
+      name='PreloadMinStep', full_name='ttvcloud.models.VodPlayInfo.PreloadMinStep', index=16,
       number=17, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='PreloadMaxStep', full_name='Vcloud.Models.Vod.VodPlayInfo.PreloadMaxStep', index=17,
+      name='PreloadMaxStep', full_name='ttvcloud.models.VodPlayInfo.PreloadMaxStep', index=17,
       number=18, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='PreloadInterval', full_name='Vcloud.Models.Vod.VodPlayInfo.PreloadInterval', index=18,
+      name='PreloadInterval', full_name='ttvcloud.models.VodPlayInfo.PreloadInterval', index=18,
       number=19, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='P2pVerifyUrl', full_name='Vcloud.Models.Vod.VodPlayInfo.P2pVerifyUrl', index=19,
+      name='P2pVerifyUrl', full_name='ttvcloud.models.VodPlayInfo.P2pVerifyUrl', index=19,
       number=20, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='PlayAuth', full_name='Vcloud.Models.Vod.VodPlayInfo.PlayAuth', index=20,
+      name='PlayAuth', full_name='ttvcloud.models.VodPlayInfo.PlayAuth', index=20,
       number=21, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='PlayAuthId', full_name='Vcloud.Models.Vod.VodPlayInfo.PlayAuthId', index=21,
+      name='PlayAuthId', full_name='ttvcloud.models.VodPlayInfo.PlayAuthId', index=21,
       number=22, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='LogoType', full_name='Vcloud.Models.Vod.VodPlayInfo.LogoType', index=22,
+      name='LogoType', full_name='ttvcloud.models.VodPlayInfo.LogoType', index=22,
       number=23, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='Quality', full_name='Vcloud.Models.Vod.VodPlayInfo.Quality', index=23,
+      name='Quality', full_name='ttvcloud.models.VodPlayInfo.Quality', index=23,
       number=24, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -470,37 +470,37 @@ _VODPLAYINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=733,
-  serialized_end=1197,
+  serialized_start=725,
+  serialized_end=1189,
 )
 
 
 _VODGETORIGINALPLAYINFOREQUEST = _descriptor.Descriptor(
   name='VodGetOriginalPlayInfoRequest',
-  full_name='Vcloud.Models.Vod.VodGetOriginalPlayInfoRequest',
+  full_name='ttvcloud.models.VodGetOriginalPlayInfoRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='Vid', full_name='Vcloud.Models.Vod.VodGetOriginalPlayInfoRequest.Vid', index=0,
+      name='Vid', full_name='ttvcloud.models.VodGetOriginalPlayInfoRequest.Vid', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='Base64', full_name='Vcloud.Models.Vod.VodGetOriginalPlayInfoRequest.Base64', index=1,
-      number=2, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
+      name='Base64', full_name='ttvcloud.models.VodGetOriginalPlayInfoRequest.Base64', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='Ssl', full_name='Vcloud.Models.Vod.VodGetOriginalPlayInfoRequest.Ssl', index=2,
-      number=3, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
+      name='Ssl', full_name='ttvcloud.models.VodGetOriginalPlayInfoRequest.Ssl', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -516,28 +516,28 @@ _VODGETORIGINALPLAYINFOREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1199,
-  serialized_end=1272,
+  serialized_start=1191,
+  serialized_end=1264,
 )
 
 
 _VODGETORIGINALPLAYINFORESPONSE = _descriptor.Descriptor(
   name='VodGetOriginalPlayInfoResponse',
-  full_name='Vcloud.Models.Vod.VodGetOriginalPlayInfoResponse',
+  full_name='ttvcloud.models.VodGetOriginalPlayInfoResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='ResponseMetadata', full_name='Vcloud.Models.Vod.VodGetOriginalPlayInfoResponse.ResponseMetadata', index=0,
+      name='ResponseMetadata', full_name='ttvcloud.models.VodGetOriginalPlayInfoResponse.ResponseMetadata', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='Result', full_name='Vcloud.Models.Vod.VodGetOriginalPlayInfoResponse.Result', index=1,
+      name='Result', full_name='ttvcloud.models.VodGetOriginalPlayInfoResponse.Result', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -555,91 +555,91 @@ _VODGETORIGINALPLAYINFORESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1275,
-  serialized_end=1436,
+  serialized_start=1267,
+  serialized_end=1426,
 )
 
 
 _VODGETORIGINALPLAYINFORESULT = _descriptor.Descriptor(
   name='VodGetOriginalPlayInfoResult',
-  full_name='Vcloud.Models.Vod.VodGetOriginalPlayInfoResult',
+  full_name='ttvcloud.models.VodGetOriginalPlayInfoResult',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='FileType', full_name='Vcloud.Models.Vod.VodGetOriginalPlayInfoResult.FileType', index=0,
+      name='FileType', full_name='ttvcloud.models.VodGetOriginalPlayInfoResult.FileType', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='Duration', full_name='Vcloud.Models.Vod.VodGetOriginalPlayInfoResult.Duration', index=1,
+      name='Duration', full_name='ttvcloud.models.VodGetOriginalPlayInfoResult.Duration', index=1,
       number=2, type=2, cpp_type=6, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='Size', full_name='Vcloud.Models.Vod.VodGetOriginalPlayInfoResult.Size', index=2,
+      name='Size', full_name='ttvcloud.models.VodGetOriginalPlayInfoResult.Size', index=2,
       number=3, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='Height', full_name='Vcloud.Models.Vod.VodGetOriginalPlayInfoResult.Height', index=3,
+      name='Height', full_name='ttvcloud.models.VodGetOriginalPlayInfoResult.Height', index=3,
       number=4, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='Width', full_name='Vcloud.Models.Vod.VodGetOriginalPlayInfoResult.Width', index=4,
+      name='Width', full_name='ttvcloud.models.VodGetOriginalPlayInfoResult.Width', index=4,
       number=5, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='Format', full_name='Vcloud.Models.Vod.VodGetOriginalPlayInfoResult.Format', index=5,
+      name='Format', full_name='ttvcloud.models.VodGetOriginalPlayInfoResult.Format', index=5,
       number=6, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='Codec', full_name='Vcloud.Models.Vod.VodGetOriginalPlayInfoResult.Codec', index=6,
+      name='Codec', full_name='ttvcloud.models.VodGetOriginalPlayInfoResult.Codec', index=6,
       number=7, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='Bitrate', full_name='Vcloud.Models.Vod.VodGetOriginalPlayInfoResult.Bitrate', index=7,
+      name='Bitrate', full_name='ttvcloud.models.VodGetOriginalPlayInfoResult.Bitrate', index=7,
       number=8, type=2, cpp_type=6, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='Md5', full_name='Vcloud.Models.Vod.VodGetOriginalPlayInfoResult.Md5', index=8,
+      name='Md5', full_name='ttvcloud.models.VodGetOriginalPlayInfoResult.Md5', index=8,
       number=9, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='MainPlayUrl', full_name='Vcloud.Models.Vod.VodGetOriginalPlayInfoResult.MainPlayUrl', index=9,
+      name='MainPlayUrl', full_name='ttvcloud.models.VodGetOriginalPlayInfoResult.MainPlayUrl', index=9,
       number=10, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='BackupPlayUrl', full_name='Vcloud.Models.Vod.VodGetOriginalPlayInfoResult.BackupPlayUrl', index=10,
+      name='BackupPlayUrl', full_name='ttvcloud.models.VodGetOriginalPlayInfoResult.BackupPlayUrl', index=10,
       number=11, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -657,8 +657,8 @@ _VODGETORIGINALPLAYINFORESULT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1439,
-  serialized_end=1655,
+  serialized_start=1429,
+  serialized_end=1645,
 )
 
 _VODGETPLAYINFORESPONSE.fields_by_name['ResponseMetadata'].message_type = base__pb2._RESPONSEMETADATA
@@ -680,56 +680,56 @@ _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 VodGetPlayInfoRequest = _reflection.GeneratedProtocolMessageType('VodGetPlayInfoRequest', (_message.Message,), {
   'DESCRIPTOR' : _VODGETPLAYINFOREQUEST,
   '__module__' : 'vod_play_pb2'
-  # @@protoc_insertion_point(class_scope:Vcloud.Models.Vod.VodGetPlayInfoRequest)
+  # @@protoc_insertion_point(class_scope:ttvcloud.models.VodGetPlayInfoRequest)
   })
 _sym_db.RegisterMessage(VodGetPlayInfoRequest)
 
 VodGetPlayInfoResponse = _reflection.GeneratedProtocolMessageType('VodGetPlayInfoResponse', (_message.Message,), {
   'DESCRIPTOR' : _VODGETPLAYINFORESPONSE,
   '__module__' : 'vod_play_pb2'
-  # @@protoc_insertion_point(class_scope:Vcloud.Models.Vod.VodGetPlayInfoResponse)
+  # @@protoc_insertion_point(class_scope:ttvcloud.models.VodGetPlayInfoResponse)
   })
 _sym_db.RegisterMessage(VodGetPlayInfoResponse)
 
 VodGetPlayInfoResult = _reflection.GeneratedProtocolMessageType('VodGetPlayInfoResult', (_message.Message,), {
   'DESCRIPTOR' : _VODGETPLAYINFORESULT,
   '__module__' : 'vod_play_pb2'
-  # @@protoc_insertion_point(class_scope:Vcloud.Models.Vod.VodGetPlayInfoResult)
+  # @@protoc_insertion_point(class_scope:ttvcloud.models.VodGetPlayInfoResult)
   })
 _sym_db.RegisterMessage(VodGetPlayInfoResult)
 
 VodAdaptiveInfo = _reflection.GeneratedProtocolMessageType('VodAdaptiveInfo', (_message.Message,), {
   'DESCRIPTOR' : _VODADAPTIVEINFO,
   '__module__' : 'vod_play_pb2'
-  # @@protoc_insertion_point(class_scope:Vcloud.Models.Vod.VodAdaptiveInfo)
+  # @@protoc_insertion_point(class_scope:ttvcloud.models.VodAdaptiveInfo)
   })
 _sym_db.RegisterMessage(VodAdaptiveInfo)
 
 VodPlayInfo = _reflection.GeneratedProtocolMessageType('VodPlayInfo', (_message.Message,), {
   'DESCRIPTOR' : _VODPLAYINFO,
   '__module__' : 'vod_play_pb2'
-  # @@protoc_insertion_point(class_scope:Vcloud.Models.Vod.VodPlayInfo)
+  # @@protoc_insertion_point(class_scope:ttvcloud.models.VodPlayInfo)
   })
 _sym_db.RegisterMessage(VodPlayInfo)
 
 VodGetOriginalPlayInfoRequest = _reflection.GeneratedProtocolMessageType('VodGetOriginalPlayInfoRequest', (_message.Message,), {
   'DESCRIPTOR' : _VODGETORIGINALPLAYINFOREQUEST,
   '__module__' : 'vod_play_pb2'
-  # @@protoc_insertion_point(class_scope:Vcloud.Models.Vod.VodGetOriginalPlayInfoRequest)
+  # @@protoc_insertion_point(class_scope:ttvcloud.models.VodGetOriginalPlayInfoRequest)
   })
 _sym_db.RegisterMessage(VodGetOriginalPlayInfoRequest)
 
 VodGetOriginalPlayInfoResponse = _reflection.GeneratedProtocolMessageType('VodGetOriginalPlayInfoResponse', (_message.Message,), {
   'DESCRIPTOR' : _VODGETORIGINALPLAYINFORESPONSE,
   '__module__' : 'vod_play_pb2'
-  # @@protoc_insertion_point(class_scope:Vcloud.Models.Vod.VodGetOriginalPlayInfoResponse)
+  # @@protoc_insertion_point(class_scope:ttvcloud.models.VodGetOriginalPlayInfoResponse)
   })
 _sym_db.RegisterMessage(VodGetOriginalPlayInfoResponse)
 
 VodGetOriginalPlayInfoResult = _reflection.GeneratedProtocolMessageType('VodGetOriginalPlayInfoResult', (_message.Message,), {
   'DESCRIPTOR' : _VODGETORIGINALPLAYINFORESULT,
   '__module__' : 'vod_play_pb2'
-  # @@protoc_insertion_point(class_scope:Vcloud.Models.Vod.VodGetOriginalPlayInfoResult)
+  # @@protoc_insertion_point(class_scope:ttvcloud.models.VodGetOriginalPlayInfoResult)
   })
 _sym_db.RegisterMessage(VodGetOriginalPlayInfoResult)
 
@@ -738,17 +738,17 @@ DESCRIPTOR._options = None
 
 _VODPLAYSERVICE = _descriptor.ServiceDescriptor(
   name='VodPlayService',
-  full_name='Vcloud.Models.Vod.VodPlayService',
+  full_name='ttvcloud.models.VodPlayService',
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=1658,
-  serialized_end=2200,
+  serialized_start=1648,
+  serialized_end=2182,
   methods=[
   _descriptor.MethodDescriptor(
     name='GetPlayInfo',
-    full_name='Vcloud.Models.Vod.VodPlayService.GetPlayInfo',
+    full_name='ttvcloud.models.VodPlayService.GetPlayInfo',
     index=0,
     containing_service=None,
     input_type=_VODGETPLAYINFOREQUEST,
@@ -758,7 +758,7 @@ _VODPLAYSERVICE = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='GetOriginalPlayInfo',
-    full_name='Vcloud.Models.Vod.VodPlayService.GetOriginalPlayInfo',
+    full_name='ttvcloud.models.VodPlayService.GetOriginalPlayInfo',
     index=1,
     containing_service=None,
     input_type=_VODGETORIGINALPLAYINFOREQUEST,
