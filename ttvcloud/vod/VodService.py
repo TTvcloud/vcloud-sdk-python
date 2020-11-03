@@ -1,24 +1,20 @@
 # coding:utf-8
 
 from __future__ import print_function
-
-import json
 import os
 import threading
 import time
-import ttvcloud.models
 from zlib import crc32
-
 from ttvcloud.ApiInfo import ApiInfo
 from ttvcloud.Credentials import Credentials
 from ttvcloud.ServiceInfo import ServiceInfo
 from ttvcloud.base.Service import Service
 from ttvcloud.const.Const import *
-from ttvcloud.Policy import SecurityToken2, InnerToken, ComplexEncoder, Policy, Statement
-from ttvcloud.models.vod_play_pb2 import *
-from ttvcloud.models.base_pb2 import *
+from ttvcloud.Policy import *
 from ttvcloud.util.Util import *
-from google.protobuf.json_format import Parse
+from google.protobuf.json_format import *
+from ttvcloud.models.vod.request.request_vod_pb2 import *
+from ttvcloud.models.vod.response.response_vod_pb2 import *
 
 
 class VodService(Service):
@@ -61,60 +57,39 @@ class VodService(Service):
     @staticmethod
     def get_api_info():
         api_info = {
-                    "GetPlayInfo": ApiInfo("GET", "/", {"Action": "GetPlayInfo", "Version": "2020-08-01"}, {}, 
-                                                {}),
-                    "StartWorkflow": ApiInfo("POST", "/", {"Action": "StartWorkflow", "Version": "2020-08-01"}, {},
-                                                {}),
-                    "UploadMediaByUrl": ApiInfo("GET", "/", {"Action": "UploadMediaByUrl", "Version": "2018-01-01"}, {},
-                                                {}),
-                    "ApplyUpload": ApiInfo("GET", "/", {"Action": "ApplyUpload", "Version": "2018-01-01"}, {}, {}),
-                    "CommitUpload": ApiInfo("POST", "/", {"Action": "CommitUpload", "Version": "2018-01-01"}, {}, {}),
-                    "SetVideoPublishStatus": ApiInfo("POST", "/",
-                                                     {"Action": "SetVideoPublishStatus", "Version": "2018-01-01"}, {},
-                                                     {}),
-                    "GetCdnDomainWeights": ApiInfo("GET", "/",
-                                                   {"Action": "GetCdnDomainWeights", "Version": "2019-07-01"}, {}, {}),
-                    "GetOriginVideoPlayInfo": ApiInfo("GET", "/",
-                                                      {"Action": "GetOriginVideoPlayInfo", "Version": "2020-08-01"}, {},
-                                                      {}),
-                    "RedirectPlay": ApiInfo("GET", "/", {"Action": "RedirectPlay", "Version": "2020-08-01"}, {}, {}),
-                    "ModifyVideoInfo": ApiInfo("POST", "/", {"Action": "ModifyVideoInfo", "Version": "2018-01-01"}, {},
-                                               {}),
-                    }
+            "GetPlayInfo": ApiInfo("GET", "/", {"Action": "GetPlayInfo", "Version": "2020-08-01"}, {},
+                                   {}),
+            "GetOriginalPlayInfo": ApiInfo("GET", "/",
+                                           {"Action": "GetOriginalPlayInfo", "Version": "2020-08-01"}, {},
+                                           {}),
+            "RedirectPlay": ApiInfo("GET", "/", {"Action": "RedirectPlay", "Version": "2020-08-01"}, {}, {}),
+            "StartWorkflow": ApiInfo("POST", "/", {"Action": "StartWorkflow", "Version": "2020-08-01"}, {},
+                                     {}),
+            "UploadMediaByUrl": ApiInfo("GET", "/", {"Action": "UploadMediaByUrl", "Version": "2018-01-01"}, {},
+                                        {}),
+            "ApplyUpload": ApiInfo("GET", "/", {"Action": "ApplyUpload", "Version": "2018-01-01"}, {}, {}),
+            "CommitUpload": ApiInfo("POST", "/", {"Action": "CommitUpload", "Version": "2018-01-01"}, {}, {}),
+            "SetVideoPublishStatus": ApiInfo("POST", "/",
+                                             {"Action": "SetVideoPublishStatus", "Version": "2018-01-01"}, {},
+                                             {}),
+            "GetCdnDomainWeights": ApiInfo("GET", "/",
+                                           {"Action": "GetCdnDomainWeights", "Version": "2019-07-01"}, {}, {}),
+            "ModifyVideoInfo": ApiInfo("POST", "/", {"Action": "ModifyVideoInfo", "Version": "2018-01-01"}, {},
+                                       {}),
+        }
         return api_info
 
-    # play
-    def get_play_info(self, request: VodGetPlayInfoRequest) -> VodGetPlayInfoResponse:
+    #
+    # GetPlayInfo.
+    #
+    # @param request VodGetPlayInfoRequest
+    # @return VodGetPlayInfoResponse
+    # @raise Exception
+    def getPlayInfo(self, request: VodGetPlayInfoRequest) -> VodGetPlayInfoResponse:
         try:
             params = dict()
-            if request.Vid is None:
-                raise Exception("InvalidParameter")
-            else:
-                params['Vid'] = request.Vid
-            if request.Format is None or request.Format == '':
-                params['Format'] = 'mp4'
-            else:
-                params['Format'] = request.Format
-            if request.Codec is None or request.Codec == '':
-                params['Codec'] = 'h264'
-            else:
-                params['Codec'] = request.Codec
-            if request.Definition is not None:
-                params['Definition'] = request.Definition
-            if request.FileType is None or request.FileType == '':
-                params['FileType'] = 'video'
-            else:
-                params['FileType'] = request.FileType
-            if request.LogoType is not None:
-                params['LogoType'] = request.LogoType
-            if request.Base64 is None or request.Base64 != 1:
-                params['Base64'] = 0
-            else:
-                params['Base64'] = 1
-            if request.Ssl is None or request.Ssl != 1:
-                params['Ssl'] = 0
-            else:
-                params['Ssl'] = 1
+            jsonData = MessageToJson(request, False, True)
+            params = json.loads(jsonData)
             res = self.get("GetPlayInfo", params)
             if res == '':
                 raise Exception("InternalError")
@@ -122,22 +97,18 @@ class VodService(Service):
         except Exception:
             raise
 
-    def get_origin_video_play_info(self, request:VodGetOriginalPlayInfoRequest) -> VodGetOriginalPlayInfoResponse:
+    #
+    # GetOriginalPlayInfo.
+    #
+    # @param request VodGetOriginalPlayInfoRequest
+    # @return VodGetOriginalPlayInfoResponse
+    # @raise Exception
+    def getOriginalPlayInfo(self, request: VodGetOriginalPlayInfoRequest) -> VodGetOriginalPlayInfoResponse:
         try:
             params = dict()
-            if request.Vid is None:
-                raise Exception("InvalidParameter")
-            else:
-                params['Vid'] = request.Vid
-            if request.Base64 is None or request.Base64 != 1:
-                params['Base64'] = 0
-            else:
-                params['Base64'] = 1
-            if request.Ssl is None or request.Ssl != 1:
-                params['Ssl'] = 0
-            else:
-                params['Ssl'] = 1
-            res = self.get("GetOriginVideoPlayInfo", params)
+            jsonData = MessageToJson(request, False, True)
+            params = json.loads(jsonData)
+            res = self.get("GetOriginalPlayInfo", params)
             if res == '':
                 raise Exception("InternalError")
             return Parse(res, VodGetOriginalPlayInfoResponse(), True)

@@ -1,7 +1,7 @@
 # coding:utf-8
 from __future__ import print_function
 
-from ttvcloud.models.vod_play_pb2 import *
+from ttvcloud.models.vod.request.request_vod_pb2 import *
 from ttvcloud.vod.VodService import VodService
 
 if __name__ == '__main__':
@@ -13,7 +13,8 @@ if __name__ == '__main__':
         vid = 'v0c2c369007abu04ru8riko30uo9n73g'
         req = VodGetPlayInfoRequest()
         req.Vid = vid
-        resp = vod_service.get_play_info(req)
+        req.Ssl = '1'
+        resp = vod_service.getPlayInfo(req)
     except Exception:
         raise
     else:
@@ -29,7 +30,7 @@ if __name__ == '__main__':
         req2 = VodGetOriginalPlayInfoRequest()
         req2.Vid = vid
         req2.Ssl = '1'
-        resp2 = vod_service.get_origin_video_play_info(req2)
+        resp2 = vod_service.getOriginalPlayInfo(req2)
     except Exception:
         raise
     else:
