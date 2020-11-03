@@ -36,6 +36,7 @@ class VodService(Service):
         self.lock = threading.Lock()
         super(VodService, self).__init__(self.service_info, self.api_info)
 
+    # TODO 测试完毕修改回来
     @staticmethod
     def get_service_info(region):
         service_info_map = {
@@ -57,25 +58,21 @@ class VodService(Service):
     @staticmethod
     def get_api_info():
         api_info = {
-            "GetPlayInfo": ApiInfo("GET", "/", {"Action": "GetPlayInfo", "Version": "2020-08-01"}, {},
-                                   {}),
-            "GetOriginalPlayInfo": ApiInfo("GET", "/",
-                                           {"Action": "GetOriginalPlayInfo", "Version": "2020-08-01"}, {},
-                                           {}),
+            "GetPlayInfo": ApiInfo("GET", "/", {"Action": "GetPlayInfo", "Version": "2020-08-01"}, {}, {}),
+            "GetOriginalPlayInfo": ApiInfo("GET", "/", {"Action": "GetOriginalPlayInfo", "Version": "2020-08-01"}, {}, {}),
             "RedirectPlay": ApiInfo("GET", "/", {"Action": "RedirectPlay", "Version": "2020-08-01"}, {}, {}),
-            "StartWorkflow": ApiInfo("POST", "/", {"Action": "StartWorkflow", "Version": "2020-08-01"}, {},
-                                     {}),
-            "UploadMediaByUrl": ApiInfo("GET", "/", {"Action": "UploadMediaByUrl", "Version": "2018-01-01"}, {},
-                                        {}),
+            "StartWorkflow": ApiInfo("POST", "/", {"Action": "StartWorkflow", "Version": "2020-08-01"}, {}, {}),
+            "UploadMediaByUrl": ApiInfo("GET", "/", {"Action": "UploadMediaByUrl", "Version": "2018-01-01"}, {}, {}),
             "ApplyUpload": ApiInfo("GET", "/", {"Action": "ApplyUpload", "Version": "2018-01-01"}, {}, {}),
             "CommitUpload": ApiInfo("POST", "/", {"Action": "CommitUpload", "Version": "2018-01-01"}, {}, {}),
-            "SetVideoPublishStatus": ApiInfo("POST", "/",
-                                             {"Action": "SetVideoPublishStatus", "Version": "2018-01-01"}, {},
-                                             {}),
-            "GetCdnDomainWeights": ApiInfo("GET", "/",
-                                           {"Action": "GetCdnDomainWeights", "Version": "2019-07-01"}, {}, {}),
-            "ModifyVideoInfo": ApiInfo("POST", "/", {"Action": "ModifyVideoInfo", "Version": "2018-01-01"}, {},
-                                       {}),
+            "SetVideoPublishStatus": ApiInfo("POST", "/", {"Action": "SetVideoPublishStatus", "Version": "2018-01-01"}, {}, {}),
+            "GetCdnDomainWeights": ApiInfo("GET", "/", {"Action": "GetCdnDomainWeights", "Version": "2019-07-01"}, {}, {}),
+            "ModifyVideoInfo": ApiInfo("POST", "/", {"Action": "ModifyVideoInfo", "Version": "2018-01-01"}, {}, {}),
+            "UploadVideoByUrl": ApiInfo("GET", "/", {"Action": "UploadVideoByUrl", "Version": "2020-08-01"}, {}, {}),
+            "QueryUploadTaskInfo": ApiInfo("GET", "/", {"Action": "QueryUploadTaskInfo", "Version": "2020-08-01"}, {}, {}),
+            # TODO 测试完毕后把Header去掉
+            "ApplyUploadInfo": ApiInfo("GET", "/", {"Action": "ApplyUploadInfo", "Version": "2020-08-01"}, {}, {"X-TT-ENV": "boe_husky_feature"}),
+            "CommitUploadInfo": ApiInfo("POST", "/", {"Action": "CommitUploadInfo", "Version": "2020-08-01"}, {}, {"X-TT-ENV": "boe_husky_feature"}),
         }
         return api_info
 
@@ -143,8 +140,23 @@ class VodService(Service):
         res_json = json.loads(res)
         return res_json
 
+    def apply_upload_info(self, params):
+        res = self.get('ApplyUploadInfo', params)
+        if res == '':
+            raise Exception("empty response")
+        res_json = json.loads(res)
+        return res_json
+
+    # TODO 注释，参照标准库
     def commit_upload(self, params, body):
         res = self.json('CommitUpload', params, body)
+        if res == '':
+            raise Exception("empty response")
+        res_json = json.loads(res)
+        return res_json
+
+    def commit_upload_info(self, params, form):
+        res = self.post('CommitUploadInfo', params, form)
         if res == '':
             raise Exception("empty response")
         res_json = json.loads(res)
@@ -156,6 +168,21 @@ class VodService(Service):
             raise Exception("empty response")
         res_json = json.loads(res)
         return res_json
+
+    def upload_video_by_url_tob(self, url_upload_request):
+        return self.upload_video_by_url(url_upload_request.to_dict())
+
+    def upload_video_by_url(self, params):
+        res = self.get('UploadVideoByUrl', params)
+        if res == '':
+            raise Exception("empty response")
+        return json.loads(res)
+
+    def query_upload_task_info(self, url_upload_query_request):
+        res = self.get('QueryUploadTaskInfo', url_upload_query_request.to_dict())
+        if res == '':
+            raise Exception("empty response")
+        return json.loads(res)
 
     def upload(self, space_name, file_path, file_type):
         if not os.path.isfile(file_path):
@@ -193,6 +220,43 @@ class VodService(Service):
 
         return oid, session_key, avg_speed
 
+    def upload_tob(self, space_name, file_path):
+        if not os.path.isfile(file_path):
+            raise Exception("no such file on file path")
+        check_sum = hex(VodService.crc32(file_path))[2:]
+
+        apply_upload_info_request = {'SpaceName': space_name}
+        resp = self.apply_upload_info(apply_upload_info_request)
+        if 'Error' in resp['ResponseMetadata']:
+            raise Exception(resp['ResponseMetadata']['Error']['Message'])
+
+        # TODO 提出来， storeinfos 长度要判断
+        oid = resp['Result']['Data']['UploadAddress']['StoreInfos'][0]['StoreUri']
+        session_key = resp['Result']['Data']['UploadAddress']['SessionKey']
+        auth = resp['Result']['Data']['UploadAddress']['StoreInfos'][0]['Auth']
+        host = resp['Result']['Data']['UploadAddress']['UploadHosts'][0]
+
+        url = 'http://{}/{}'.format(host, oid)
+
+        headers = {'Content-CRC32': check_sum, 'Authorization': auth}
+        start = time.time()
+
+        upload_status = False
+        for i in range(3):
+            upload_status, resp = self.put(url, file_path, headers)
+            if upload_status:
+                break
+            else:
+                print(resp)
+        if not upload_status:
+            raise Exception("upload error")
+
+        cost = (time.time() - start) * 1000
+        file_size = os.path.getsize(file_path)
+        avg_speed = float(file_size) / float(cost)
+
+        return oid, session_key, avg_speed
+
     def upload_video(self, space_name, file_path, file_type, funtions_list, callback_args=''):
         oid, session_key, avg_speed = self.upload(space_name, file_path, file_type)
 
@@ -208,6 +272,21 @@ class VodService(Service):
         if 'Error' in resp['ResponseMetadata']:
             raise Exception(resp['ResponseMetadata']['Error']['Message'])
         return resp['Result']
+
+    def upload_video_tob(self, upload_video_reqeust):
+        oid, session_key, avg_speed = self.upload_tob(upload_video_reqeust.space_name, upload_video_reqeust.file_path)
+
+        form = dict()
+        form['SessionKey'] = session_key
+        form['SpaceName'] = upload_video_reqeust.space_name
+        funcs_str = json.dumps(upload_video_reqeust.function_list)
+        form['Functions'] = funcs_str
+        form['CallbackArgs'] = upload_video_reqeust.callback_args
+
+        resp = self.commit_upload_info({}, form)
+        if 'Error' in resp['ResponseMetadata']:
+            raise Exception(resp['ResponseMetadata']['Error']['Message'])
+        return resp
 
     def upload_poster(self, vid, space_name, file_path, file_type):
         oid, session_key, avg_speed = self.upload(space_name, file_path, file_type)
