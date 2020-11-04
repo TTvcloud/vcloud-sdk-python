@@ -82,7 +82,7 @@ class VodService(Service):
     # @param request VodGetPlayInfoRequest
     # @return VodGetPlayInfoResponse
     # @raise Exception
-    def getPlayInfo(self, request: VodGetPlayInfoRequest) -> VodGetPlayInfoResponse:
+    def get_play_info(self, request: VodGetPlayInfoRequest) -> VodGetPlayInfoResponse:
         try:
             params = dict()
             jsonData = MessageToJson(request, False, True)
@@ -100,7 +100,7 @@ class VodService(Service):
     # @param request VodGetOriginalPlayInfoRequest
     # @return VodGetOriginalPlayInfoResponse
     # @raise Exception
-    def getOriginalPlayInfo(self, request: VodGetOriginalPlayInfoRequest) -> VodGetOriginalPlayInfoResponse:
+    def get_original_play_info(self, request: VodGetOriginalPlayInfoRequest) -> VodGetOriginalPlayInfoResponse:
         try:
             params = dict()
             jsonData = MessageToJson(request, False, True)
