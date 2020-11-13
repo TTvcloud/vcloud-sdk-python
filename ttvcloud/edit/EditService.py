@@ -33,11 +33,12 @@ class EditService(Service):
     def get_api_info():
         api_info = {"SubmitDirectEditTaskAsync": ApiInfo("POST", "/", {"Action": "SubmitDirectEditTaskAsync",
                                                                        "Version": "2018-01-01"}, {}, {}),
-                    "GetDirectEditResult": ApiInfo("POST", "/",
-                                                   {"Action": "GetDirectEditResult", "Version": "2018-01-01"}, {}, {}),
-                    "SubmitDirectEditTaskSync": ApiInfo("POST", "/",
-                                                        {"Action": "SubmitDirectEditTaskSync", "Version": "2018-01-01"},
-                                                        {}, {})
+                    "SubmitDirectEditTaskSync": ApiInfo("POST", "/", {"Action": "SubmitDirectEditTaskSync",
+                                                                      "Version": "2018-01-01"}, {}, {}),
+                    "GetDirectEditResult": ApiInfo("POST", "/", {"Action": "GetDirectEditResult",
+                                                                 "Version": "2018-01-01"}, {}, {}),
+                    "SubmitTemplateTaskAsync": ApiInfo("POST", "/", {"Action": "SubmitTemplateTaskAsync",
+                                                                     "Version": "2018-01-01"}, {}, {})
                     }
         return api_info
 
@@ -57,6 +58,13 @@ class EditService(Service):
 
     def get_direct_edit_result(self, body):
         res = self.json('GetDirectEditResult', {}, body)
+        if res == '':
+            raise Exception("empty response")
+        res_json = json.loads(res)
+        return res_json
+
+    def submit_template_task_async(self, body):
+        res = self.json('SubmitTemplateTaskAsync', {}, body)
         if res == '':
             raise Exception("empty response")
         res_json = json.loads(res)

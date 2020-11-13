@@ -48,3 +48,22 @@ if __name__ == '__main__':
     body = json.dumps(body)
     resp = edit_service.get_direct_edit_result(body)
     print(resp)
+
+    print("****")
+
+    body = {}
+    body["Type"] = 2
+    body["TemplateId"] = "your template id"
+    body["Space"] = "your uploader"
+    body["VideoName"] = ["your name"]
+    body["Params"] = [[
+        {
+            "Type": "image",
+            "Position": "0",
+            "Source": "your image uri",
+        }
+    ]]
+
+    body = json.dumps(body)
+    resp = edit_service.submit_template_task_async(body)
+    print(resp)
