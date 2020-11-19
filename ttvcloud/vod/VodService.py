@@ -152,10 +152,11 @@ class VodService(Service):
         session_key = resp['Result']['UploadAddress']['SessionKey']
         auth = resp['Result']['UploadAddress']['StoreInfos'][0]['Auth']
         host = resp['Result']['UploadAddress']['UploadHosts'][0]
-
+        upload_headers = resp['Result']['UploadAddress']['UploadHeader']
         url = 'http://{}/{}'.format(host, oid)
 
         headers = {'Content-CRC32': check_sum, 'Authorization': auth}
+        headers.update(upload_headers)
         start = time.time()
 
         upload_status = False
