@@ -18,15 +18,25 @@ class EditService(Service):
                     EditService._instance = object.__new__(cls)
         return EditService._instance
 
-    def __init__(self):
-        self.service_info = EditService.get_service_info()
+    def __init__(self, region='cn-north-1'):
+        self.service_info = EditService.get_service_info(region)
         self.api_info = EditService.get_api_info()
         super(EditService, self).__init__(self.service_info, self.api_info)
 
     @staticmethod
-    def get_service_info():
-        service_info = ServiceInfo("open.bytedanceapi.com", {'Accept': 'application/json'},
-                                   Credentials('', '', 'edit', 'cn-north-1'), 5, 5)
+    def get_service_info(region):
+        service_info_map = {
+            'cn-north-1': ServiceInfo("open.bytedanceapi.com", {'Accept': 'application/json'},
+                                      Credentials('', '', 'edit', 'cn-north-1'), 5, 5),
+            'ap-singapore-1': ServiceInfo("open.ap-singapore-1.bytedanceapi.com", {'Accept': 'application/json'},
+                                          Credentials('', '', 'edit', 'ap-singapore-1'), 5, 5),
+            'us-east-1': ServiceInfo("open.us-east-1.bytedanceapi.com", {'Accept': 'application/json'},
+                                     Credentials('', '', 'edit', 'us-east-1'), 5, 5),
+        }
+        service_info = service_info_map.get(region, None)
+        if not service_info:
+            raise Exception('Cant find the region, please check it carefully')
+
         return service_info
 
     @staticmethod
