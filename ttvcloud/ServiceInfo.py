@@ -9,3 +9,6 @@ class ServiceInfo(object):
         self.connection_timeout = connection_timeout
         self.socket_timeout = socket_timeout
         self.scheme = scheme
+
+    def add_header(self, key, value):
+        self.header[key] = value

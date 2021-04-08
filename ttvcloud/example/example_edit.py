@@ -12,6 +12,9 @@ if __name__ == '__main__':
     # edit_service.set_ak('ak')
     # edit_service.set_sk('sk')
 
+    # add custom header
+    # edit_service.add_header('X-TT-LOGID', 'xxx')
+
     body = {}
     body["EditParam"] = {
         "Upload": {

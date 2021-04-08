@@ -36,6 +36,9 @@ class Service(object):
                     if 'sk' in j:
                         self.service_info.credentials.set_sk(j['sk'])
 
+    def add_header(self, key, value):
+        self.service_info.add_header(key, value)
+
     def set_ak(self, ak):
         self.service_info.credentials.set_ak(ak)
 
