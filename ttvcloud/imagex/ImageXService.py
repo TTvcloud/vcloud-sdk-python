@@ -214,9 +214,6 @@ class ImageXService(Service):
 
     # 更新图片URL：action为0表示刷新，为1表示禁用，为2表示解禁
     def update_image_urls(self, service_id, urls, action=0):
-        if action < 0 or action > 2:
-            raise Exception("update action should be [0,2], %d" % action)
-
         query = {
             'ServiceId': service_id
         }
