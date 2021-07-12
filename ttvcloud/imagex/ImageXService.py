@@ -212,11 +212,8 @@ class ImageXService(Service):
         inline_policy = Policy([statement])
         return self.sign_sts2(inline_policy, expire)
 
-    # 更新图片URL：action为0表示刷新，为1表示禁用，为2表示解禁
+    # 更新图片URL：action为0表示刷新，为1表示禁用，为2表示解禁，为4表示预热，为5表示目录刷新，为6表示样式刷新
     def update_image_urls(self, service_id, urls, action=0):
-        if action < 0 or action > 2:
-            raise Exception("update action should be [0,2], %d" % action)
-
         query = {
             'ServiceId': service_id
         }
