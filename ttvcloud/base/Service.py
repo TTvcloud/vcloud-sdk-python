@@ -51,6 +51,10 @@ class Service(object):
     def set_scheme(self, scheme):
         self.service_info.scheme = scheme
 
+    def set_timeout(self, connection_timeout, socket_timeout):
+        self.service_info.connection_timeout = connection_timeout
+        self.service_info.socket_timeout = socket_timeout
+
     def get_sign_url(self, api, params):
         if not (api in self.api_info):
             raise Exception("no such api")
@@ -120,14 +124,14 @@ class Service(object):
 
     def put(self, url, file_path, headers):
         with open(file_path, 'rb') as f:
-            resp = self.session.put(url, headers=headers, data=f)
+            resp = self.session.put(url, headers=headers, data=f, timeout=(self.service_info.connection_timeout, self.service_info.socket_timeout))
             if resp.status_code == 200:
                 return True, resp.text
             else:
                 return False, resp.text
 
     def put_data(self, url, data, headers):
-        resp = self.session.put(url, headers=headers, data=data)
+        resp = self.session.put(url, headers=headers, data=data, timeout=(self.service_info.connection_timeout, self.service_info.socket_timeout))
         if resp.status_code == 200:
             return True, resp.text
         else:
