@@ -13,13 +13,15 @@ from ttvcloud.const.Const import *
 from ttvcloud.util.Util import *
 from ttvcloud.Policy import *
 
-IMAGEX_HOST_CN = "imagex.bytedanceapi.com"
-IMAGEX_HOST_VA = "imagex.us-east-1.bytedanceapi.com"
-IMAGEX_HOST_SG = "imagex.ap-singapore-1.bytedanceapi.com"
+IMAGEX_HOST_CN  = "imagex.bytedanceapi.com"
+IMAGEX_HOST_VA  = "imagex.us-east-1.bytedanceapi.com"
+IMAGEX_HOST_SG  = "imagex.ap-singapore-1.bytedanceapi.com"
+IMAGEX_HOST_GCP = "imagex-us-east-2.bytevcloudapi.com"
 
-IMAGEX_INNER_HOST_CN = "imagex.byted.org"
-IMAGEX_INNER_HOST_VA = "imagex.us-east-1.byted.org"
-IMAGEX_INNER_HOST_SG = "imagex.ap-singapore-1.byted.org"
+IMAGEX_INNER_HOST_CN  = "imagex.byted.org"
+IMAGEX_INNER_HOST_VA  = "imagex.us-east-1.byted.org"
+IMAGEX_INNER_HOST_SG  = "imagex.ap-singapore-1.byted.org"
+IMAGEX_INNER_HOST_GCP = "imagex-us-east-2.byted.org"
 
 IMAGEX_SERVICE_NAME = "ImageX"
 IMAGEX_API_VERSION = "2018-08-01"
@@ -42,6 +44,11 @@ service_info_map = {
         {'Accept': 'application/json'},
         Credentials('', '', IMAGEX_SERVICE_NAME, REGION_US_EAST1),
         10, 10, "https"),
+    REGION_US_EAST2: ServiceInfo(
+       IMAGEX_HOST_GCP,
+        {'Accept': 'application/json'},
+        Credentials('', '', IMAGEX_SERVICE_NAME, REGION_US_EAST2),
+        10, 10, "https"), 
     INNER_REGION_CN_NORTH1: ServiceInfo(
         IMAGEX_INNER_HOST_CN,
         {'Accept': 'application/json'},
@@ -57,6 +64,11 @@ service_info_map = {
         {'Accept': 'application/json'},
         Credentials('', '', IMAGEX_SERVICE_NAME, REGION_US_EAST1),
         10, 10),
+   INNER_REGION_US_EAST2: ServiceInfo(
+        IMAGEX_INNER_HOST_GCP,
+        {'Accept': 'application/json'},
+        Credentials('', '', IMAGEX_SERVICE_NAME, REGION_US_EAST2),
+        10, 10), 
 }
 
 api_info = {
