@@ -16,10 +16,7 @@ from ttvcloud.Policy import *
 IMAGEX_HOST_CN = "imagex.bytedanceapi.com"
 IMAGEX_HOST_VA = "imagex.us-east-1.bytedanceapi.com"
 IMAGEX_HOST_SG = "imagex.ap-singapore-1.bytedanceapi.com"
-
-IMAGEX_INNER_HOST_CN = "imagex.byted.org"
-IMAGEX_INNER_HOST_VA = "imagex.us-east-1.byted.org"
-IMAGEX_INNER_HOST_SG = "imagex.ap-singapore-1.byted.org"
+IMAGEX_HOST_GCP = "imagex-us-east-2.bytevcloudapi.com"
 
 IMAGEX_SERVICE_NAME = "ImageX"
 IMAGEX_API_VERSION = "2018-08-01"
@@ -42,52 +39,55 @@ service_info_map = {
         {'Accept': 'application/json'},
         Credentials('', '', IMAGEX_SERVICE_NAME, REGION_US_EAST1),
         10, 10, "https"),
-    INNER_REGION_CN_NORTH1: ServiceInfo(
-        IMAGEX_INNER_HOST_CN,
+    REGION_US_EAST2: ServiceInfo(
+        IMAGEX_HOST_GCP,
         {'Accept': 'application/json'},
-        Credentials('', '', IMAGEX_SERVICE_NAME, REGION_CN_NORTH1),
-        10, 10),
-    INNER_REGION_AP_SINGAPORE1: ServiceInfo(
-        IMAGEX_INNER_HOST_SG,
-        {'Accept': 'application/json'},
-        Credentials('', '', IMAGEX_SERVICE_NAME, REGION_AP_SINGAPORE1),
-        10, 10),
-    INNER_REGION_US_EAST1: ServiceInfo(
-        IMAGEX_INNER_HOST_VA,
-        {'Accept': 'application/json'},
-        Credentials('', '', IMAGEX_SERVICE_NAME, REGION_US_EAST1),
-        10, 10),
+        Credentials('', '', IMAGEX_SERVICE_NAME, REGION_US_EAST2),
+        10, 10, "https"),
 }
 
 api_info = {
     # 模板管理
     "CreateImageTemplate":
-        ApiInfo("POST", "/", {"Action": "CreateImageTemplate", "Version": IMAGEX_API_VERSION}, {}, {}),
+        ApiInfo("POST", "/", {"Action": "CreateImageTemplate",
+                "Version": IMAGEX_API_VERSION}, {}, {}),
     "DeleteImageTemplate":
-        ApiInfo("POST", "/", {"Action": "DeleteImageTemplate", "Version": IMAGEX_API_VERSION}, {}, {}),
+        ApiInfo("POST", "/", {"Action": "DeleteImageTemplate",
+                "Version": IMAGEX_API_VERSION}, {}, {}),
     "PreviewImageTemplate":
-        ApiInfo("POST", "/", {"Action": "PreviewImageTemplate", "Version": IMAGEX_API_VERSION}, {}, {}),
+        ApiInfo("POST", "/", {"Action": "PreviewImageTemplate",
+                "Version": IMAGEX_API_VERSION}, {}, {}),
     "GetImageTemplate":
-        ApiInfo("GET", "/", {"Action": "GetImageTemplate", "Version": IMAGEX_API_VERSION}, {}, {}),
+        ApiInfo("GET", "/", {"Action": "GetImageTemplate",
+                "Version": IMAGEX_API_VERSION}, {}, {}),
     "GetAllImageTemplates":
-        ApiInfo("GET", "/", {"Action": "GetAllImageTemplates", "Version": IMAGEX_API_VERSION}, {}, {}),
+        ApiInfo("GET", "/", {"Action": "GetAllImageTemplates",
+                "Version": IMAGEX_API_VERSION}, {}, {}),
     # 资源管理相关
     "ApplyImageUpload":
-        ApiInfo("GET", "/", {"Action": "ApplyImageUpload", "Version": IMAGEX_API_VERSION}, {}, {}),
+        ApiInfo("GET", "/", {"Action": "ApplyImageUpload",
+                "Version": IMAGEX_API_VERSION}, {}, {}),
     "CommitImageUpload":
-        ApiInfo("POST", "/", {"Action": "CommitImageUpload", "Version": IMAGEX_API_VERSION}, {}, {}),
+        ApiInfo("POST", "/", {"Action": "CommitImageUpload",
+                "Version": IMAGEX_API_VERSION}, {}, {}),
     "DeleteImageUploadFiles":
-        ApiInfo("POST", "/", {"Action": "DeleteImageUploadFiles", "Version": IMAGEX_API_VERSION}, {}, {}),
+        ApiInfo("POST", "/", {"Action": "DeleteImageUploadFiles",
+                "Version": IMAGEX_API_VERSION}, {}, {}),
     "UpdateImageUploadFiles":
-        ApiInfo("POST", "/", {"Action": "UpdateImageUploadFiles", "Version": IMAGEX_API_VERSION}, {}, {}),
+        ApiInfo("POST", "/", {"Action": "UpdateImageUploadFiles",
+                "Version": IMAGEX_API_VERSION}, {}, {}),
     "PreviewImageUploadFile":
-        ApiInfo("GET", "/", {"Action": "PreviewImageUploadFile", "Version": IMAGEX_API_VERSION}, {}, {}),
+        ApiInfo("GET", "/", {"Action": "PreviewImageUploadFile",
+                "Version": IMAGEX_API_VERSION}, {}, {}),
     "GetImageUploadFile":
-        ApiInfo("GET", "/", {"Action": "GetImageUploadFile", "Version": IMAGEX_API_VERSION}, {}, {}),
+        ApiInfo("GET", "/", {"Action": "GetImageUploadFile",
+                "Version": IMAGEX_API_VERSION}, {}, {}),
     "GetImageUploadFiles":
-        ApiInfo("GET", "/", {"Action": "GetImageUploadFiles", "Version": IMAGEX_API_VERSION}, {}, {}),
+        ApiInfo("GET", "/", {"Action": "GetImageUploadFiles",
+                "Version": IMAGEX_API_VERSION}, {}, {}),
     "GetImageUpdateFiles":
-        ApiInfo("GET", "/", {"Action": "GetImageUpdateFiles", "Version": IMAGEX_API_VERSION}, {}, {})
+        ApiInfo("GET", "/", {"Action": "GetImageUpdateFiles",
+                "Version": IMAGEX_API_VERSION}, {}, {})
 }
 
 
@@ -101,7 +101,8 @@ class ImageXService(Service):
     def get_service_info(region):
         service_info = service_info_map.get(region, None)
         if not service_info:
-            raise Exception('Cant find the region %s, please check it carefully' % region)
+            raise Exception(
+                'Cant find the region %s, please check it carefully' % region)
         return service_info
 
     @staticmethod
@@ -173,7 +174,8 @@ class ImageXService(Service):
             'SessionKey': session_key,
             'Functions': functions,
         }
-        resp = self.commit_upload(commit_upload_request, json.dumps(commit_upload_body))
+        resp = self.commit_upload(
+            commit_upload_request, json.dumps(commit_upload_body))
         if 'Error' in resp['ResponseMetadata']:
             raise Exception(resp['ResponseMetadata'])
         return resp['Result']
@@ -197,7 +199,8 @@ class ImageXService(Service):
         apply_token = self.get_sign_url('ApplyImageUpload', params)
         commit_token = self.get_sign_url('CommitImageUpload', params)
 
-        ret = {'Version': 'v1', 'ApplyUploadToken': apply_token, 'CommitUploadToken': commit_token}
+        ret = {'Version': 'v1', 'ApplyUploadToken': apply_token,
+               'CommitUploadToken': commit_token}
         data = json.dumps(ret)
         if sys.version_info[0] == 3:
             return base64.b64encode(data.encode('utf-8')).decode('utf-8')
@@ -277,4 +280,3 @@ class ImageXService(Service):
             raise Exception("%s: empty response" % action)
         res_json = json.loads(res)
         return res_json
-
